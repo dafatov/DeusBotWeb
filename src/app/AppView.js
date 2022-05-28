@@ -22,7 +22,7 @@ const AppView = () => {
       <Switch>
         <Route path="/" component={Landing} exact/>
         <Route path="/auth" component={Auth} exact/>
-        <AuthRoute logged={/*logged*/true} path="/player" component={Player} exact/>
+        <AuthRoute logged={logged} path="/player" component={Player} exact/>
         <Route path="/" component={NotFound}/>
       </Switch>
     </Stack>
