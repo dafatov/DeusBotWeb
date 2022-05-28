@@ -1,7 +1,6 @@
-import {client_id, client_secret, client_uri, discord_api_url} from "../config";
+const discord_auth_url = `${process.env.REACT_APP_DISCORD_API_URL}/oauth2/token`;
 
-const discord_auth_url = `${discord_api_url}/oauth2/token`;
-export const redirect_url = `http${process.env.PORT ? "s" : ""}://${client_uri}/auth`;
+export const redirect_url = `http${process.env.PORT ? "s" : ""}://${process.env.REACT_APP_CLIENT_URI}/auth`;
 
 export const authorization = (code) =>
   fetch(discord_auth_url, {
@@ -11,8 +10,8 @@ export const authorization = (code) =>
     },
     body: new URLSearchParams({
       "grant_type": "authorization_code",
-      client_id,
-      client_secret,
+      client_id: process.env.REACT_APP_CLIENT_ID,
+      client_secret: process.env.REACT_APP_CLIENT_SECRET,
       code,
       redirect_uri: redirect_url
     })
@@ -26,8 +25,8 @@ export const reauthorization = (refresh_token) =>
     },
     body: new URLSearchParams({
       "grant_type": "refresh_token",
-      client_id,
-      client_secret,
+      client_id: process.env.REACT_APP_CLIENT_ID,
+      client_secret: process.env.REACT_APP_CLIENT_SECRET,
       refresh_token
     })
   }).then(r => r.json());

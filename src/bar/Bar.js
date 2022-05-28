@@ -4,12 +4,11 @@ import {Login, Logout} from "@mui/icons-material";
 import {logout, useAuth} from "../security/AuthProvider";
 import {getProfile} from "../api/profileApi";
 import {useEffect, useState} from "react";
-import {client_id, discord_api_url, discord_cdn_url} from "../config";
 import {redirect_url} from "../api/securityApi";
 
-const Bar = () => {
-  const auth_url = `${discord_api_url}/oauth2/authorize?client_id=${client_id}&redirect_uri=${redirect_url}&response_type=code&scope=identify%20email`;
+const auth_url = `${process.env.REACT_APP_DISCORD_API_URL}/oauth2/authorize?client_id=${process.env.REACT_APP_CLIENT_ID}&redirect_uri=${redirect_url}&response_type=code&scope=identify%20email`;
 
+const Bar = () => {
   const history = useHistory();
   const [logged, session] = useAuth();
   const [avatar, setAvatar] = useState("");
@@ -35,7 +34,7 @@ const Bar = () => {
   useEffect(() => {
     if (session) {
       getProfile(session).then((p =>
-        setAvatar(`${discord_cdn_url}/avatars/${p.id}/${p.avatar}`)));
+        setAvatar(`${process.env.REACT_APP_DISCORD_CDN_URL}/avatars/${p.id}/${p.avatar}`)));
     }
   }, [session]);
 
