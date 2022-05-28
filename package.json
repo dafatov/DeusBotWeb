@@ -32,6 +32,9 @@
     "react-token-auth": "^2.3.8",
     "socket.io-client": "^4.4.1"
   },
+  "engines": {
+    "node": "16.13.0"
+  },
   "devDependencies": {
     "eslint": "^8.6.0"
   },
