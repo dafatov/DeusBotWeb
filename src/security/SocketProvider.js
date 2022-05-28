@@ -1,13 +1,13 @@
 import {io} from "socket.io-client";
-import {createContext, useContext, useEffect, useRef} from "react";
+import {createContext, useContext} from "react";
 import {server_uri} from "../config";
 
 const SocketContext = createContext({});
 
 export const SocketProvider = ({children}) => {
-  const socket = useRef(null);
+  const socket = io(`ws://${server_uri}`);
 
-  useEffect(() => {socket.current = io(`ws://${server_uri}`)}, [])
+  //useEffect(() => {socket.current = io(`ws://${server_uri}`)}, [])
 
   return (
     <SocketContext.Provider
@@ -18,4 +18,4 @@ export const SocketProvider = ({children}) => {
   );
 };
 
-export const useSocket = () => useContext(SocketContext).current;
+export const useSocket = () => useContext(SocketContext)/*.current*/;
