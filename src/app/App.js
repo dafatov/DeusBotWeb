@@ -1,4 +1,3 @@
-/*import AppView from "./AppView";
 import {BrowserRouter} from "react-router-dom";
 import {ThemeProvider} from "@mui/material/styles";
 import theme from "../styles/theme";
@@ -12,34 +11,25 @@ function App() {
       <ThemeProvider theme={theme}>
         <SnackbarProvider {...SnackBarProviderProps}>
           <SocketProvider>
-            <AppView/>
+            <div className="App">
+              <header className="App-header">
+                <p>
+                  Edit <code>src/App.js</code> and save to reload.
+                </p>
+                <a
+                  className="App-link"
+                  href="https://reactjs.org"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Learn React
+                </a>
+              </header>
+            </div>
           </SocketProvider>
         </SnackbarProvider>
       </ThemeProvider>
     </BrowserRouter>
-  );
-}
-
-export default App;
-*/
-
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
   );
 }
 
