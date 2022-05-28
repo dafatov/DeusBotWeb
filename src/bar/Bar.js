@@ -7,9 +7,9 @@ import {useEffect, useState} from "react";
 import {client_id, discord_api_url, discord_cdn_url} from "../config";
 import {redirect_url} from "../api/securityApi";
 
-const auth_url = `${discord_api_url}/oauth2/authorize?client_id=${client_id}&redirect_uri=${redirect_url}&response_type=code&scope=identify%20email`;
-
 const Bar = () => {
+  const auth_url = `${discord_api_url}/oauth2/authorize?client_id=${client_id}&redirect_uri=${redirect_url}&response_type=code&scope=identify%20email`;
+
   const history = useHistory();
   const [logged, session] = useAuth();
   const [avatar, setAvatar] = useState("");
