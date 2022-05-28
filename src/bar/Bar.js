@@ -24,6 +24,7 @@ const Bar = () => {
   }
 
   const handleLogin = () => {
+    console.log(process.env)
     window.location.assign(auth_url);
   }
 
