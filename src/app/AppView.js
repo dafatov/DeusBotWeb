@@ -6,10 +6,10 @@ import Auth from "../pages/auth/Auth";
 import Bar from "../bar/Bar";
 import {Stack} from "@mui/material";
 import AuthRoute from "../components/AuthRoute";
-//import {useAuth} from "../security/AuthProvider";
+import {useAuth} from "../security/AuthProvider";
 
 const AppView = () => {
-  //const [logged] = useAuth();
+  const [logged] = useAuth();
 
   return (
     <Stack
