@@ -1,6 +1,6 @@
 const discord_auth_url = `${process.env.REACT_APP_DISCORD_API_URL}/oauth2/token`;
 
-export const redirect_url = `http${process.env.PORT ? "s" : ""}://${process.env.REACT_APP_CLIENT_URI}/auth`;
+export const redirect_url = `https://${process.env.REACT_APP_CLIENT_URI}/auth`;
 
 export const authorization = (code) =>
   fetch(discord_auth_url, {
