@@ -6,7 +6,10 @@ const SocketContext = createContext({});
 export const SocketProvider = ({children}) => {
   const socket = useRef(null);
 
-  useEffect(() => {socket.current = io(`ws://${process.env.REACT_APP_SERVER_URI}`)}, [])
+  useEffect(() => {
+    socket.current = io(`ws://${process.env.REACT_APP_SERVER_URI}`);
+    console.log(`ws://${process.env.REACT_APP_SERVER_URI}`)
+  }, [])
 
   return (
     <SocketContext.Provider
