@@ -1,4 +1,4 @@
-import {client_id, client_secret, client_uri, discord_api_url, discord_cdn_url, server_uri} from "./configLocal";
+const {client_id, client_secret, client_uri, discord_api_url, discord_cdn_url, server_uri} = require("./configLocal");
 
 module.exports = {
   'client_uri': process.env.CLIENT_URI || client_uri,
