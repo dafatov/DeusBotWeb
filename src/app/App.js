@@ -1,16 +1,9 @@
-import {BrowserRouter} from "react-router-dom";
 import {ThemeProvider} from "@mui/material/styles";
 import theme from "../styles/theme";
-import {SnackbarProvider} from "notistack";
-import {SnackBarProviderProps} from "../utils/SnackBar";
-import {SocketProvider} from "../security/SocketProvider";
 
 function App() {
   return (
-    <BrowserRouter basename="/">
       <ThemeProvider theme={theme}>
-        <SnackbarProvider {...SnackBarProviderProps}>
-          <SocketProvider>
             <div className="App">
               <header className="App-header">
                 <p>
@@ -26,10 +19,7 @@ function App() {
                 </a>
               </header>
             </div>
-          </SocketProvider>
-        </SnackbarProvider>
       </ThemeProvider>
-    </BrowserRouter>
   );
 }
 
