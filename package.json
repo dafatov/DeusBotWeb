@@ -15,22 +15,22 @@
     "url": "git+https://github.com/dafatov/DeusBotApp.git"
   },
   "dependencies": {
-    "@emotion/react": "^11.7.1",
-    "@emotion/styled": "^11.6.0",
-    "@hoeks/use-abortable-fetch": "^1.0.0",
-    "@mui/icons-material": "^5.2.5",
+    "@emotion/react": "11.7.1",
+    "@emotion/styled": "11.6.0",
+    "@hoeks/use-abortable-fetch": "1.0.0",
+    "@mui/icons-material": "5.2.5",
     "@mui/lab": "5.0.0-alpha.62",
-    "@mui/material": "^5.2.7",
-    "framer-motion": "^5.5.6",
-    "notistack": "^2.0.3",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-drag-listview": "^0.1.8",
-    "react-router-dom": "^5.3.0",
-    "react-scripts": "^5.0.0",
-    "react-scrollbars-custom": "^4.0.27",
-    "react-token-auth": "^2.3.8",
-    "socket.io-client": "^4.4.1"
+    "@mui/material": "5.2.7",
+    "framer-motion": "5.5.6",
+    "notistack": "2.0.3",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-drag-listview": "0.1.8",
+    "react-router-dom": "5.3.0",
+    "react-scripts": "5.0.0",
+    "react-scrollbars-custom": "4.0.27",
+    "react-token-auth": "2.3.8",
+    "socket.io-client": "4.4.1"
   },
   "engines": {
     "node": "16.13.0"
