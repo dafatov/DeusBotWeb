@@ -1,7 +1,7 @@
-import {useAuth} from "../security/AuthProvider";
+//import {useAuth} from "../security/AuthProvider";
 
 const AppView = () => {
-  const [logged] = useAuth();
+  //const [logged] = useAuth();
 
   return (
     <div className="App">
