@@ -5,9 +5,9 @@ import {server_uri} from "../config";
 const SocketContext = createContext({});
 
 export const SocketProvider = ({children}) => {
-  const socket = useRef();
+  const socket = useRef(null);
 
-  useEffect(() => socket.current = io(`ws://${server_uri}`), [])
+  useEffect(() => {socket.current = io(`ws://${server_uri}`)}, [])
 
   return (
     <SocketContext.Provider
