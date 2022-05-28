@@ -1,11 +1,11 @@
-import {io} from "socket.io-client";
+//import {io} from "socket.io-client";
 import {createContext, useContext} from "react";
-import {server_uri} from "../config";
+//import {server_uri} from "../config";
 
 const SocketContext = createContext({});
 
 export const SocketProvider = ({children}) => {
-  const socket = io(`ws://${server_uri}`);
+  const socket = "test"/*io(`ws://${server_uri}`);*/
 
   //useEffect(() => {socket.current = io(`ws://${server_uri}`)}, [])
 
@@ -14,6 +14,7 @@ export const SocketProvider = ({children}) => {
       value={socket}
     >
       {children}
+      {socket}
     </SocketContext.Provider>
   );
 };
