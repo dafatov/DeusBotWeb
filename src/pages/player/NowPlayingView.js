@@ -12,14 +12,14 @@ const NowPlayingView = ({nowPlaying, isLoading, setIsLoading}) => {
   const {showSuccess, showWarning} = useSnackBar();
   const [, session] = useAuth();
   const socket = useSocket();
-  const [playbackDuration, setplaybackDuration] = useState(0);
+  const [playbackDuration, setPlaybackDuration] = useState(0);
 
   useEffect(() => {
-    setplaybackDuration(nowPlaying?.song?.playbackDuration ?? 0);
+    setPlaybackDuration(nowPlaying?.song?.playbackDuration ?? 0);
   }, [nowPlaying?.song?.playbackDuration])
 
   useInterval(() => {
-    setplaybackDuration(Math.min(playbackDuration + 1000, parseInt(nowPlaying?.song?.length ?? 0) * 1000))
+    setPlaybackDuration(Math.min(playbackDuration + 1000, parseInt(nowPlaying?.song?.length ?? 0) * 1000))
   }, nowPlaying?.song?.isLive || nowPlaying?.isPause ? null : 1025, [])
 
   const handleSkipButton = () => {

@@ -23,14 +23,13 @@ const YoutubeForm = ({onSubmit, isLoading}) => {
   };
 
   const handleKeyboard = e => {
-    e.preventDefault();
     if (e.key === "Enter") {
       handleSubmit();
     }
   }
 
   return (
-    <div onKeyPress={handleKeyboard}>
+    <div onKeyDown={handleKeyboard}>
       <Tooltip title="Youtube">
         <span>
           <LoadingButton
