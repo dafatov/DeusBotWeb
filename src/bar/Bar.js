@@ -19,6 +19,10 @@ const Bar = () => {
     history.push("/player");
   }
 
+  const handleAdministrationPage = () => {
+    history.push("/administration");
+  }
+
   const handleMainPage = () => {
     history.push("/");
   }
@@ -59,6 +63,10 @@ const Bar = () => {
               key="player"
               onClick={handlePlayerPage}
             >Плеер</Button>
+            <Button
+              key="administration"
+              onClick={handleAdministrationPage}
+            >Администрирование</Button>
           </Box>
           <Box sx={{
             flexGrow: 0

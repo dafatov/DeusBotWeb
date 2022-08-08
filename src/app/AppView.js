@@ -7,6 +7,7 @@ import Bar from "../bar/Bar";
 import {Stack} from "@mui/material";
 import AuthRoute from "../components/AuthRoute";
 import {useAuth} from "../security/AuthProvider";
+import Administration from "../pages/administration/Administration";
 
 const AppView = () => {
   const [logged] = useAuth();
@@ -23,6 +24,7 @@ const AppView = () => {
         <Route path="/" component={Landing} exact/>
         <Route path="/auth" component={Auth} exact/>
         <AuthRoute logged={logged} path="/player" component={Player} exact/>
+        <AuthRoute logged={logged} path="/administration" component={Administration} exact/>
         <Route path="/" component={NotFound}/>
       </Switch>
     </Stack>
