@@ -1,9 +1,9 @@
-import {useHistory} from "react-router-dom";
-import {Box, CircularProgress} from "@mui/material";
-import {useEffect} from "react";
-import {login, useAuth} from "../../security/AuthProvider";
-import {useSnackBar} from "../../utils/SnackBar";
-import {authorization} from "../../api/securityApi";
+import {Box, CircularProgress} from '@mui/material';
+import {useEffect} from 'react';
+import {useHistory} from 'react-router-dom';
+import {authorization} from '../../api/securityApi';
+import {login, useAuth} from '../../security/AuthProvider';
+import {useSnackBar} from '../../utils/SnackBar';
 
 const Auth = () => {
   const history = useHistory();
