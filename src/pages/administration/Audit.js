@@ -1,16 +1,16 @@
-import {useEffect, useState} from "react";
-import {useAuth} from "../../security/AuthProvider";
-import {useSocket} from "../../security/SocketProvider";
-import {useInterval} from "../../utils/UseInterval";
-import {CircularProgress} from "@mui/material";
-import MUIDataTable from "mui-datatables";
-import moment from "moment-timezone";
+import {CircularProgress} from '@mui/material';
+import moment from 'moment-timezone';
+import MUIDataTable from 'mui-datatables';
+import {useEffect, useState} from 'react';
+import {useAuth} from '../../security/AuthProvider';
+import {useSocket} from '../../security/SocketProvider';
+import {useInterval} from '../../utils/UseInterval';
 
 const Audit = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isPendingAudit, setIsPendingAudit] = useState(false);
   const [isPendingGuilds, setIsPendingGuilds] = useState(false);
-  const [, session] = useAuth();
+  const [logged] = useAuth();
   const socket = useSocket();
   const [audit, setAudit] = useState(null);
   const [guilds, setGuilds] = useState(null);
@@ -20,8 +20,8 @@ const Audit = () => {
   }, [isPendingAudit, isPendingGuilds])
 
   useEffect(() => {
-    if (session && socket) {
-      socket.on("auditor:audit", r => {
+    if (logged && socket) {
+      socket.on('auditor:audit', r => {
         setAudit(r);
         setIsPendingAudit(false);
       });
@@ -29,9 +29,9 @@ const Audit = () => {
       setAudit(null);
     }
     return () => {
-      socket?.removeAllListeners("auditor:audit");
-    }
-  }, [session, socket])
+      socket?.removeAllListeners('auditor:audit');
+    };
+  }, [logged, socket])
 
   useEffect(() => {
     if (socket) {
@@ -47,10 +47,10 @@ const Audit = () => {
   }, [setIsLoading, socket])
 
   useInterval(() => {
-    if (session && socket) {
-      socket.emit("auditor:audit");
+    if (logged && socket) {
+      socket.emit('auditor:audit');
     }
-  }, 10000, [session, socket])
+  }, 10000, [logged, socket])
 
   if (isLoading || !audit) {
     return <CircularProgress/>
