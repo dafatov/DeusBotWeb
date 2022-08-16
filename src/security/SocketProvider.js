@@ -1,13 +1,16 @@
-import {io} from "socket.io-client";
-import {createContext, useContext, useEffect, useRef} from "react";
-import {isLocalhost} from "../utils/string";
+import {createContext, useContext, useEffect, useRef} from 'react';
+import {io} from 'socket.io-client';
 
 const SocketContext = createContext({});
 
 export const SocketProvider = ({children}) => {
   const socket = useRef(null);
 
-  useEffect(() => {socket.current = io(`http${isLocalhost() ? '' : 's'}://${process.env.REACT_APP_SERVER_URI}`);}, [])
+  useEffect(() => {
+    socket.current = io(`http${process.env.REACT_APP_PROFILE === 'DEV'
+      ? ''
+      : 's'}://${process.env.REACT_APP_SERVER_URI}`);
+  }, []);
 
   return (
     <SocketContext.Provider

@@ -1,72 +1,75 @@
-import {Card, CardContent, Divider, Paper, Stack, Tooltip, Typography} from "@mui/material";
-import {LoadingButton} from "@mui/lab";
-import {ClearAll, Shuffle} from "@mui/icons-material";
-import {useSnackBar} from "../../utils/SnackBar";
-import {useAuth} from "../../security/AuthProvider";
-import {useSocket} from "../../security/SocketProvider";
-import YoutubeForm from "./injections/YoutubeForm";
-import Shikimori from "./injections/Shikimori";
-import Radios from "./injections/Radios";
+import {ClearAll, Shuffle} from '@mui/icons-material';
+import {LoadingButton} from '@mui/lab';
+import {Card, CardContent, Divider, Paper, Stack, Tooltip, Typography} from '@mui/material';
+import {memo, useCallback} from 'react';
+import {useAuth} from '../../security/AuthProvider';
+import {useSocket} from '../../security/SocketProvider';
+import {useSnackBar} from '../../utils/snackBar';
+import {Radio} from '../injection/radio/Radio';
+import {Shikimori} from '../injection/shikimori/Shikimori';
+import {Youtube} from '../injection/youtube/Youtube';
+import {useStyles} from './controlStyles';
 
-const ControlView = ({isLoading, setIsLoading}) => {
+export const Control = memo(({isLoading, setIsLoading}) => {
+  const classes = useStyles();
   const {showSuccess, showWarning} = useSnackBar();
   const [, session] = useAuth();
   const socket = useSocket();
 
-  const handleShuffleButton = () => {
+  const handleShuffleButton = useCallback(() => {
     setIsLoading(true);
-    socket.emit("control:shuffle", session.access_token, data => {
+    socket.emit('control:shuffle', session.access_token, data => {
       if (data.result) {
         showWarning(data.result);
       } else {
-        showSuccess("Успешно перемешана очередь");
+        showSuccess('Успешно перемешана очередь');
       }
     });
-  }
+  }, [setIsLoading, socket, session, showWarning, showSuccess]);
 
-  const handleClearButton = () => {
+  const handleClearButton = useCallback(() => {
     setIsLoading(true);
-    socket.emit("control:clear", session.access_token, data => {
+    socket.emit('control:clear', session.access_token, data => {
       if (data.result) {
         showWarning(data.result);
       } else {
-        showSuccess("Успешно очищена очередь");
+        showSuccess('Успешно очищена очередь');
       }
     });
-  }
+  }, [setIsLoading, socket, session, showWarning, showSuccess]);
 
-  const handleYoutubeSubmit = (audio) => {
+  const handleYoutubeSubmit = useCallback((audio) => {
     setIsLoading(true);
-    socket.emit("control:play", session.access_token, audio, data => {
+    socket.emit('control:play', session.access_token, audio, data => {
       if (data.result) {
         showWarning(data.result);
       } else {
-        showSuccess(`Добавлено: "${data.Added?.title}"`)
+        showSuccess(`Добавлено: "${data.added?.title}"`);
       }
     });
-  }
+  }, [setIsLoading, socket, session, showWarning, showSuccess]);
 
-  const handleShikimoriSubmit = (username, countSongs) => {
+  const handleShikimoriSubmit = useCallback((username, countSongs) => {
     setIsLoading(true);
-    socket.emit("control:shikimori", session.access_token, username, countSongs, data => {
+    socket.emit('control:shikimori', session.access_token, username, countSongs, data => {
       if (data.result) {
         showWarning(data.result);
       } else {
-        showSuccess(`Добавлено: ${data.count} песен профиля "${data.login}"`)
+        showSuccess(`Добавлено: ${data.count} песен профиля "${data.login}"`);
       }
     });
-  }
+  }, [setIsLoading, socket, session, showWarning, showSuccess]);
 
-  const handleRadiosSubmit = (radio) => {
+  const handleRadiosSubmit = useCallback((radio) => {
     setIsLoading(true);
-    socket.emit("control:radio", session.access_token, radio, data => {
+    socket.emit('control:radio', session.access_token, radio, data => {
       if (data.result) {
         showWarning(data.result);
       } else {
-        showSuccess(`Добавлено: "${data.info?.title}"`)
+        showSuccess(`Добавлено: "${data.info?.title}"`);
       }
     });
-  }
+  }, [setIsLoading, socket, session, showWarning, showSuccess]);
 
   return (
     <Card>
@@ -76,16 +79,14 @@ const ControlView = ({isLoading, setIsLoading}) => {
           alignItems="center"
           spacing={2}
         >
-          <Paper elevation={2} sx={{padding: 1, width: "100%"}}>
+          <Paper elevation={2} className={classes.blockRoot}>
             <Typography variant="h4">Воздействия</Typography>
             <Divider orientation="horizontal" flexItem/>
             <Stack
               direction="row"
               alignItems="center"
               spacing={1}
-              sx={{
-                marginTop: 1.5
-              }}
+              className={classes.blockContainer}
             >
               <Tooltip title="Перемешать">
                 <span>
@@ -97,7 +98,7 @@ const ControlView = ({isLoading, setIsLoading}) => {
                     size="large"
                     aria-label="Перемешать"
                     onClick={handleShuffleButton}
-                    sx={{padding: "15px", minWidth: "56px"}}
+                    className={classes.loadingButton}
                   >
                     <Shuffle/>
                   </LoadingButton>
@@ -113,7 +114,7 @@ const ControlView = ({isLoading, setIsLoading}) => {
                     size="large"
                     aria-label="Очистить"
                     onClick={handleClearButton}
-                    sx={{padding: "15px", minWidth: "56px"}}
+                    className={classes.loadingButton}
                   >
                     <ClearAll/>
                   </LoadingButton>
@@ -121,18 +122,16 @@ const ControlView = ({isLoading, setIsLoading}) => {
               </Tooltip>
             </Stack>
           </Paper>
-          <Paper elevation={2} sx={{padding: 1, width: "100%"}}>
+          <Paper elevation={2} className={classes.blockRoot}>
             <Typography variant="h4">Инъекции</Typography>
             <Divider orientation="horizontal" flexItem/>
             <Stack
               direction="row"
               alignItems="center"
               spacing={1}
-              sx={{
-                marginTop: 1.5
-              }}
+              className={classes.blockContainer}
             >
-              <YoutubeForm
+              <Youtube
                 isLoading={isLoading}
                 onSubmit={handleYoutubeSubmit}
               />
@@ -141,7 +140,7 @@ const ControlView = ({isLoading, setIsLoading}) => {
                 onSubmit={handleShikimoriSubmit}
                 setIsLoading={setIsLoading}
               />
-              <Radios
+              <Radio
                 isLoading={isLoading}
                 onSubmit={handleRadiosSubmit}
                 setIsLoading={setIsLoading}
@@ -152,6 +151,6 @@ const ControlView = ({isLoading, setIsLoading}) => {
       </CardContent>
     </Card>
   );
-};
+});
 
-export default ControlView;
+Control.displayName = 'Control';

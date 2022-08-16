@@ -1,1 +1,0 @@
-export const isLocalhost = () => process.env.REACT_APP_CLIENT_URI.split(':')[0] === 'localhost';

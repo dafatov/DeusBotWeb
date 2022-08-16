@@ -1,17 +1,19 @@
-import {Grid} from "@mui/material";
-import NowPlayingView from "./NowPlayingView";
-import QueueView from "./QueueView";
-import ControlView from "./ControlView";
-import {useEffect, useState} from "react";
-import {useInterval} from "../../utils/UseInterval";
-import {useAuth} from "../../security/AuthProvider";
-import {useSocket} from "../../security/SocketProvider";
+import {Grid} from '@mui/material';
+import {memo, useEffect, useState} from 'react';
+import {Control} from '../../components/control/Control';
+import {NowPlaying} from '../../components/nowPlaying/NowPlaying';
+import {Queue} from '../../components/queue/Queue';
+import {useAuth} from '../../security/AuthProvider';
+import {useSocket} from '../../security/SocketProvider';
+import {useInterval} from '../../utils/useInterval';
+import {useStyles} from './playerStyles';
 
 //TODO потенциальная проблема: если при совпадении таймингов регулярного обновления
-// и нажатия кнопки, то возникает проблема раннего обновления неакульных данных
-const Player = () => {
+// и нажатия кнопки, то возникает проблема раннего обновления неактуальных данных
+export const Player = memo(() => {
+  const classes = useStyles();
   const [isLoading, setIsLoading] = useState(true);
-  const [, session] = useAuth();
+  const [logged, session] = useAuth();
   const socket = useSocket();
   const [songs, setSongs] = useState(null);
   const [nowPlaying, setNowPlaying] = useState(null);
@@ -20,15 +22,15 @@ const Player = () => {
 
   useEffect(() => {
     setIsLoading(isPendingNowPlaying || isPendingSongs);
-  }, [isPendingNowPlaying, isPendingSongs])
+  }, [isPendingNowPlaying, isPendingSongs]);
 
   useEffect(() => {
-    if (session && socket) {
-      socket.on("nowPlaying:now", r => {
+    if (logged && socket) {
+      socket.on('nowPlaying:now', r => {
         setNowPlaying(r);
         setIsPendingNowPlaying(false);
       });
-      socket.on("queue:now", r => {
+      socket.on('queue:now', r => {
         setSongs(r);
         setIsPendingSongs(false);
       });
@@ -37,17 +39,17 @@ const Player = () => {
       setSongs(null);
     }
     return () => {
-      socket?.removeAllListeners("nowPlaying:now");
-      socket?.removeAllListeners("queue:now");
-    }
-  }, [session, socket])
+      socket?.removeAllListeners('nowPlaying:now');
+      socket?.removeAllListeners('queue:now');
+    };
+  }, [logged, socket]);
 
   useInterval(() => {
-    if (session && socket) {
-      socket.emit("nowPlaying:now", session.access_token)
-      socket.emit("queue:now", session.access_token)
+    if (logged && socket) {
+      socket.emit('nowPlaying:now', session.access_token);
+      socket.emit('queue:now', session.access_token);
     }
-  }, 10000, [session, socket])
+  }, 10000, [logged, session, socket]);
 
   return (
     <Grid
@@ -55,21 +57,18 @@ const Player = () => {
       justifyContent="center"
       alignItems="flex-start"
       columnSpacing={1}
-      sx={{
-        paddingRight: 1,
-      }}
+      className={classes.root}
     >
       <Grid item xs={4}>
-        <NowPlayingView nowPlaying={nowPlaying} isLoading={isLoading} setIsLoading={setIsPendingNowPlaying}/>
+        <NowPlaying nowPlaying={nowPlaying} isLoading={isLoading} setIsLoading={setIsPendingNowPlaying}/>
       </Grid>
       <Grid item xs>
-        <QueueView songs={songs} isLoading={isLoading} setIsLoading={setIsPendingSongs}/>
+        <Queue songs={songs} isLoading={isLoading} setIsLoading={setIsPendingSongs}/>
       </Grid>
       <Grid item xs={2}>
-        <ControlView isLoading={isLoading} setIsLoading={setIsPendingSongs}/>
+        <Control isLoading={isLoading} setIsLoading={setIsPendingSongs}/>
       </Grid>
     </Grid>
   );
-};
-
-export default Player;
+});
+Player.displayName = 'Player';

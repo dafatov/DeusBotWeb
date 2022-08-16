@@ -1,10 +1,14 @@
-import {Accordion, AccordionDetails, AccordionSummary, Box, Typography} from "@mui/material";
-import Audit from "./Audit";
-import {ExpandMore} from "@mui/icons-material";
+import {ExpandMore} from '@mui/icons-material';
+import {Accordion, AccordionDetails, AccordionSummary, Box, Typography} from '@mui/material';
+import {memo} from 'react';
+import {Audit} from '../../components/audit/Audit';
+import {useStyles} from './administrationStyles';
 
-const Administration = () => {
+export const Administration = memo(() => {
+  const classes = useStyles();
+
   return (
-    <Box sx={{width: "100%", marginTop: "8px"}}>
+    <Box className={classes.root}>
       <Accordion color="primary">
         <AccordionSummary
           expandIcon={<ExpandMore/>}
@@ -18,6 +22,6 @@ const Administration = () => {
       </Accordion>
     </Box>
   );
-};
+});
 
-export default Administration;
+Administration.displayName = 'Administration';

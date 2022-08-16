@@ -1,13 +1,14 @@
-import {Button, Card, CardContent, Stack, Typography} from "@mui/material";
-import {useHistory, useLocation} from "react-router-dom";
+import {Button, Card, CardContent, Stack, Typography} from '@mui/material';
+import {memo, useCallback} from 'react';
+import {useHistory, useLocation} from 'react-router-dom';
 
-const NotFound = () => {
+export const NotFound = memo(() => {
   const location = useLocation();
   const history = useHistory();
 
-  function handleToMain() {
-    history.push("/");
-  }
+  const handleToMain = useCallback(() => {
+    history.push('/');
+  }, [history]);
 
   return (
     <Card>
@@ -23,6 +24,6 @@ const NotFound = () => {
       </CardContent>
     </Card>
   );
-};
+});
 
-export default NotFound;
+NotFound.displayName = 'NotFound';

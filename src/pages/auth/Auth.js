@@ -1,11 +1,11 @@
 import {Box, CircularProgress} from '@mui/material';
-import {useEffect} from 'react';
+import {memo, useEffect} from 'react';
 import {useHistory} from 'react-router-dom';
 import {authorization} from '../../api/securityApi';
 import {login, useAuth} from '../../security/AuthProvider';
-import {useSnackBar} from '../../utils/SnackBar';
+import {useSnackBar} from '../../utils/snackBar';
 
-const Auth = () => {
+export const Auth = memo(() => {
   const history = useHistory();
   const [logged] = useAuth();
   const {showWarning} = useSnackBar();
@@ -16,20 +16,20 @@ const Auth = () => {
     if (!logged && code) {
       authorization(code)
         .then(s => login(s))
-        .then(() => history.replace("/"));
+        .then(() => history.replace('/'));
     } else if (!logged && !code) {
-      showWarning("Пожалуйста пройдите авторизацию");
-      history.replace("/");
+      showWarning('Пожалуйста пройдите авторизацию');
+      history.replace('/');
     } else {
-      history.replace("/");
+      history.replace('/');
     }
-  }, [history, history.location, logged, showWarning]);
+  }, [history, logged, showWarning]);
 
   return (
     <Box>
       <CircularProgress size={500}/>
     </Box>
   );
-};
+});
 
-export default Auth;
+Auth.displayName = 'Auth';

@@ -1,12 +1,13 @@
-import AppView from "./AppView";
-import {BrowserRouter} from "react-router-dom";
-import {ThemeProvider} from "@mui/material/styles";
-import theme from "../styles/theme";
-import {SnackbarProvider} from "notistack";
-import {SnackBarProviderProps} from "../utils/SnackBar";
-import {SocketProvider} from "../security/SocketProvider";
+import {ThemeProvider} from '@mui/material/styles';
+import {SnackbarProvider} from 'notistack';
+import {memo} from 'react';
+import {BrowserRouter} from 'react-router-dom';
+import {SocketProvider} from '../security/SocketProvider';
+import {theme} from '../styles/theme';
+import {SnackBarProviderProps} from '../utils/snackBar';
+import {AppView} from './AppView';
 
-function App() {
+export const App = memo(() => {
   return (
     <BrowserRouter basename="/">
       <ThemeProvider theme={theme}>
@@ -18,6 +19,6 @@ function App() {
       </ThemeProvider>
     </BrowserRouter>
   );
-}
+});
 
-export default App;
+App.displayName = 'App';

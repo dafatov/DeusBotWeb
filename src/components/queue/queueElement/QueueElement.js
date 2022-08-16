@@ -1,33 +1,35 @@
-import {Avatar, Divider, Stack, Typography} from "@mui/material";
-import {timeFormatmSeconds} from "../utils/dateTime";
-import {motion} from "framer-motion";
-import {LoadingButton} from "@mui/lab";
-import {Delete} from "@mui/icons-material";
+import {Delete} from '@mui/icons-material';
+import {LoadingButton} from '@mui/lab';
+import {Avatar, Divider, Stack, Typography} from '@mui/material';
+import {motion} from 'framer-motion';
+import {memo} from 'react';
+import {timeFormatMilliseconds} from '../../../utils/dateTime';
+import {useStyles} from './queueElementStyles';
 
-const QueueElement = ({index, length, element, loading = false, onRemove}) => {
+export const QueueElement = memo(({index, length, element, loading = false, onRemove}) => {
+  const classes = useStyles();
+
   return (
     <Stack
       component={motion.div}
       initial={false}
       whileHover={{scale: 1.02}}
-      animate={element?.isRemoved ? "removed" : element?.isAdded ? "added" : "usual"}
+      animate={element?.isRemoved
+        ? 'removed'
+        : element?.isAdded
+          ? 'added'
+          : 'usual'}
       variants={{
-        usual: {background: "#ff000800"},
-        removed: {background: "#ff00083f"},
-        added: {background: "#3a900F3f"}
+        usual: {background: '#ff000800'},
+        removed: {background: '#ff00083f'},
+        added: {background: '#3a900F3f'},
       }}
       direction="row"
       alignItems="center"
       justifyContent="flex-start"
       padding={1}
       spacing={1}
-      sx={{
-        width: "100%",
-        borderRadius: "24px",
-        ":hover": {
-          cursor: "move"
-        }
-      }}
+      className={classes.root}
     >
       <Typography>{`${index + 1}`.padStart(`${length}`.length, '0')}</Typography>
       <Divider orientation="vertical" flexItem/>
@@ -36,17 +38,13 @@ const QueueElement = ({index, length, element, loading = false, onRemove}) => {
         alignItems="center"
         justifyContent="space-between"
         spacing={1}
-        sx={{
-          width: "100%"
-        }}
+        className={classes.fullWidth}
       >
         <Stack
           direction="column"
           alignItems="flex-start"
           spacing={0.1}
-          sx={{
-            width: "100%"
-          }}
+          className={classes.fullWidth}
         >
           <Typography>{element.title}</Typography>
           <Stack
@@ -54,9 +52,7 @@ const QueueElement = ({index, length, element, loading = false, onRemove}) => {
             alignItems="center"
             justifyContent="space-between"
             spacing={1}
-            sx={{
-              width: "100%"
-            }}
+            className={classes.fullWidth}
           >
             <Stack
               direction="row"
@@ -64,12 +60,12 @@ const QueueElement = ({index, length, element, loading = false, onRemove}) => {
               alignSelf="flex-start"
               spacing={1}
             >
-              <Avatar src={element.author.avatarURL} sx={{width: 24, height: 24}}/>
+              <Avatar src={element.author.avatarURL} className={classes.avatar}/>
               <Typography>{element.author.username}</Typography>
             </Stack>
           </Stack>
         </Stack>
-        <Typography>{timeFormatmSeconds(parseInt(element.length) * 1000)}</Typography>
+        <Typography>{timeFormatMilliseconds(parseInt(element.length) * 1000)}</Typography>
       </Stack>
       <LoadingButton
         loading={loading}
@@ -79,11 +75,12 @@ const QueueElement = ({index, length, element, loading = false, onRemove}) => {
         size="small"
         aria-label="удалить"
         onClick={() => onRemove(index)}
-        sx={{padding: "3px", minWidth: "32px"}}
+        className={classes.loadingButton}
       >
         <Delete/>
       </LoadingButton>
     </Stack>
   );
-};
-export default QueueElement;
+});
+
+QueueElement.displayName = 'QueueElement';

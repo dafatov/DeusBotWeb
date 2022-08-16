@@ -1,39 +1,42 @@
 import {Login, Logout} from '@mui/icons-material';
 import {AppBar, Avatar, Box, Button, Container, Divider, Fab, IconButton, ListItemIcon, Menu, MenuItem, Toolbar, Tooltip, Typography} from '@mui/material';
-import {useEffect, useState} from 'react';
+import {memo, useCallback, useEffect, useState} from 'react';
 import {useHistory} from 'react-router-dom';
 import {getProfile} from '../api/profileApi';
 import {redirect_url} from '../api/securityApi';
 import {logout, useAuth} from '../security/AuthProvider';
+import {useStyles} from './barStyles';
 
-const auth_url = `${process.env.REACT_APP_DISCORD_API_URL}/oauth2/authorize?client_id=${process.env.REACT_APP_CLIENT_ID}&redirect_uri=${redirect_url}&response_type=code&scope=${process.env.REACT_APP_DISCORD_SCOPES}`;
+const auth_url_params = `client_id=${process.env.REACT_APP_CLIENT_ID}&redirect_uri=${redirect_url}&response_type=code&scope=${process.env.REACT_APP_DISCORD_SCOPES}`;
+const auth_url = `${process.env.REACT_APP_DISCORD_API_URL}/oauth2/authorize?${auth_url_params}`;
 
-const Bar = () => {
+export const Bar = memo(() => {
+  const classes = useStyles();
   const history = useHistory();
   const [logged] = useAuth();
   const [avatar, setAvatar] = useState('');
   const [anchorEl, setAnchorEl] = useState(null);
   const [nickname, setNickname] = useState('');
 
-  const handlePlayerPage = () => {
+  const handlePlayerPage = useCallback(() => {
     history.push('/player');
-  };
+  }, [history]);
 
-  const handleAdministrationPage = () => {
+  const handleAdministrationPage = useCallback(() => {
     history.push('/administration');
-  };
+  }, [history]);
 
-  const handleMainPage = () => {
+  const handleMainPage = useCallback(() => {
     history.push('/');
-  };
+  }, [history]);
 
-  const handleLogin = () => {
+  const handleLogin = useCallback(() => {
     window.location.assign(auth_url);
-  };
+  }, []);
 
-  const handleCloseAccountMenu = () => {
+  const handleCloseAccountMenu = useCallback(() => {
     setAnchorEl(null);
-  };
+  }, [setAnchorEl]);
 
   useEffect(() => {
     if (logged) {
@@ -48,9 +51,7 @@ const Bar = () => {
     <AppBar position="static">
       <Container maxWidth="x1">
         <Toolbar disableGutters>
-          <Box sx={{
-            flexGrow: 1,
-          }}>
+          <Box className={classes.menu}>
             <Button
               key="main"
               onClick={handleMainPage}
@@ -64,12 +65,9 @@ const Bar = () => {
               onClick={handleAdministrationPage}
             >Администрирование</Button>
           </Box>
-          <Box sx={{
-            flexGrow: 0,
-          }}>
+          <Box className={classes.profile}>
             {logged
-              ?
-              <IconButton
+              ? <IconButton
                 onClick={(e) => setAnchorEl(e.currentTarget)}
                 aria-controls={Boolean(anchorEl)
                   ? 'account-menu'
@@ -81,8 +79,7 @@ const Bar = () => {
               >
                 <Avatar src={avatar}/>
               </IconButton>
-              :
-              <Tooltip title={'Войти через Дискорд'}>
+              : <Tooltip title={'Войти через Дискорд'}>
                 <Fab
                   color="primary"
                   size="small"
@@ -125,6 +122,6 @@ const Bar = () => {
       </Container>
     </AppBar>
   );
-};
+});
 
-export default Bar;
+Bar.displayName = 'Bar';

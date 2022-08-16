@@ -1,6 +1,6 @@
-import {useSnackbar as useSnackBarNotistack} from "notistack";
-import {useMemo} from "react";
-import {Collapse} from "@mui/material";
+import {Collapse} from '@mui/material';
+import {useSnackbar as useSnackBarNotistack} from 'notistack';
+import {useMemo} from 'react';
 
 export const SnackBarProviderProps = {
   autoHideDuration: 3000,
