@@ -3,10 +3,6 @@ export const defaultOptions = {
   fixedHeader: false,
   print: false,
   rowsPerPageOptions: [10, 25, 100],
-  sortOrder: {
-    name: 'created_at',
-    direction: 'desc',
-  },
   selectableRows: 'none',
   textLabels: {
     body: {
@@ -19,6 +15,7 @@ export const defaultOptions = {
       previous: 'Предыдущая страница',
       rowsPerPage: 'Строк на странице:',
       displayRows: 'из',
+      jumpToPage: 'Перейти на страницу:',
     },
     toolbar: {
       search: 'Поиск',

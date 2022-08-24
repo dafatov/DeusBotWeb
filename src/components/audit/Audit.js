@@ -1,18 +1,21 @@
-import {CircularProgress} from '@mui/material';
+import {CircularProgress, Typography} from '@mui/material';
 import moment from 'moment-timezone';
 import MUIDataTable from 'mui-datatables';
 import {memo, useEffect, useMemo, useState} from 'react';
 import {defaultOptions} from '../../configs/muiDataTable';
 import {useAuth} from '../../security/AuthProvider';
 import {useSocket} from '../../security/SocketProvider';
+import {useSnackBar} from '../../utils/snackBar';
 import {useInterval} from '../../utils/useInterval';
 
 export const Audit = memo(() => {
   const [isLoading, setIsLoading] = useState(true);
   const [isPendingAudit, setIsPendingAudit] = useState(false);
   const [isPendingGuilds, setIsPendingGuilds] = useState(false);
-  const [logged] = useAuth();
+  const [delay, setDelay] = useState(10000);
+  const [logged, session] = useAuth();
   const socket = useSocket();
+  const {showWarning} = useSnackBar();
   const [audit, setAudit] = useState(null);
   const [guilds, setGuilds] = useState(null);
 
@@ -23,7 +26,13 @@ export const Audit = memo(() => {
   useEffect(() => {
     if (logged && socket) {
       socket.on('auditor:audit', r => {
-        setAudit(r);
+        if (r.status === 403) {
+          showWarning(r?.data);
+          socket?.removeAllListeners('auditor:audit');
+          setDelay(null);
+        } else {
+          setAudit(r?.data);
+        }
         setIsPendingAudit(false);
       });
     } else {
@@ -32,7 +41,7 @@ export const Audit = memo(() => {
     return () => {
       socket?.removeAllListeners('auditor:audit');
     };
-  }, [logged, socket]);
+  }, [logged, showWarning, socket]);
 
   useEffect(() => {
     if (socket) {
@@ -45,13 +54,13 @@ export const Audit = memo(() => {
       });
     }
     return () => setGuilds(null);
-  }, [setIsLoading, socket]);
+  }, [socket]);
 
   useInterval(() => {
     if (logged && socket) {
-      socket.emit('auditor:audit');
+      socket.emit('auditor:audit', session.access_token);
     }
-  }, 10000, [logged, socket]);
+  }, delay, [logged, socket]);
 
   const columns = useMemo(() => [
     {
@@ -92,15 +101,28 @@ export const Audit = memo(() => {
     },
   ], [guilds]);
 
-  if (isLoading || !audit) {
+  const options = useMemo(() => ({
+    ...defaultOptions,
+    sortOrder: {
+      name: 'created_at',
+      direction: 'desc',
+    },
+    jumpToPage: true,
+  }), []);
+
+  if (isLoading) {
     return <CircularProgress/>;
+  }
+
+  if (!audit) {
+    return <Typography color="primary" variant="body2">Данные недоступны</Typography>;
   }
 
   return (
     <MUIDataTable
       columns={columns}
       data={audit}
-      options={defaultOptions}
+      options={options}
     />
   );
 });

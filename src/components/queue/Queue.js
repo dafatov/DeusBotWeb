@@ -10,7 +10,7 @@ import {QueueElement} from './queueElement/QueueElement';
 import {useStyles} from './queueStyles';
 
 //TODO отключать перемещение элементов при загрузке
-//TODO отключать таймер при потери связи с сервером (а лучше вообще это как-то обрабатывать)
+//TODO отключать таймер при потере связи с сервером (а лучше вообще это как-то обрабатывать)
 //TODO добавить локальное предсказание ответа сервера (просто делать то что и сервер до его ответа)
 export const Queue = memo(({songs, isLoading, setIsLoading}) => {
   const classes = useStyles();
