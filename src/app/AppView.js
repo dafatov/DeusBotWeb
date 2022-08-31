@@ -1,7 +1,6 @@
 import {Stack} from '@mui/material';
 import {memo, useEffect, useState} from 'react';
 import {Route, Switch} from 'react-router-dom';
-import {getDyno} from '../api/herokuApi';
 import {Bar} from '../bar/Bar';
 import {AuthRoute} from '../components/authRoute/AuthRoute';
 import changelog from '../configs/changelog';
@@ -20,17 +19,12 @@ export const AppView = memo(() => {
   const [SCOPES, setScopes] = useState({});
 
   useEffect(() => {
-    if (socket) {
-      getDyno().then(dynoInfo => `v${dynoInfo.release.version}`)
-        .then(version => {
-          if (localStorage.getItem('REACT_APP_HEROKU_RELEASE_VERSION') !== version) {
-            socket.emit('changelog:publish', version, changelog, realVersion => {
-              if (realVersion) {
-                localStorage.setItem('REACT_APP_HEROKU_RELEASE_VERSION', realVersion);
-              }
-            });
-          }
-        }).catch(() => {});
+    if (socket && localStorage.getItem('REACT_APP_VERSION') !== process.env.REACT_APP_VERSION) {
+      socket.emit('changelog:publish', process.env.REACT_APP_VERSION, changelog, version => {
+        if (version) {
+          localStorage.setItem('REACT_APP_VERSION', version);
+        }
+      });
     }
   }, [socket]);
 
