@@ -488,7 +488,7 @@ export const Access = memo(() => {
               <>
                 {!isWhiteListPermission(patch, userId)
                   ? <Typography variant="body2" color="primary">
-                    Все права кроме:
+                    Все права доступны
                   </Typography>
                   : <></>}
                 {findPermissionScopes(patch, userId)
@@ -515,7 +515,9 @@ export const Access = memo(() => {
                   )}
                 <Chip
                   color="primary"
-                  label="Добавить"
+                  label={isWhiteListPermission(patch, userId)
+                    ? 'Добавить'
+                    : 'Добавить исключения'}
                   disabled={isDeleted(patch, userId)}
                   className={classes.addScope}
                   onClick={() => {
