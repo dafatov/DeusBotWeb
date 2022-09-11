@@ -16,7 +16,7 @@ import {useSocket} from '../security/SocketProvider';
 export const AppView = memo(() => {
   const [, session] = useAuth();
   const socket = useSocket();
-  const [SCOPES, setScopes] = useState({});
+  const [SCOPES, setScopes] = useState(undefined);
 
   useEffect(() => {
     if (socket && localStorage.getItem('REACT_APP_VERSION') !== process.env.REACT_APP_VERSION) {
@@ -63,8 +63,8 @@ export const AppView = memo(() => {
         <Route path="/" component={Landing} exact/>
         <Route path="/auth" component={Auth} exact/>
         <Route path="/forbidden" component={Forbidden} exact/>
-        <AuthRoute session={session} scope={SCOPES.PAGE_PLAYER} path="/player" component={Player} exact/>
-        <AuthRoute session={session} scope={SCOPES.PAGE_ADMINISTRATION} path="/administration" component={Administration} exact/>
+        <AuthRoute session={session} scope={SCOPES?.PAGE_PLAYER} path="/player" component={Player} exact/>
+        <AuthRoute session={session} scope={SCOPES?.PAGE_ADMINISTRATION} path="/administration" component={Administration} exact/>
         <Route path="/" component={NotFound}/>
       </Switch>
     </Stack>
