@@ -9,7 +9,6 @@ export const useInterval = (callback, delay, dependencies) => {
 
   useEffect(() => {
     savedCallback.current();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, dependencies);
 
   useEffect(() => {
@@ -18,8 +17,8 @@ export const useInterval = (callback, delay, dependencies) => {
     }
 
     if (delay !== null) {
-      let id = setInterval(tick, delay);
+      const id = setInterval(tick, delay);
       return () => clearInterval(id);
     }
   }, [delay]);
-}
+};

@@ -1,12 +1,14 @@
 import {CircularProgress, DialogContent, DialogContentText, DialogTitle, MenuItem, Select, Slider, Stack, SvgIcon, TextField} from '@mui/material';
 import {memo, useCallback, useEffect, useState} from 'react';
+import {Injection} from '../Injection';
 import {ReactComponent as ShikimoriIcon} from '../../../assets/icons/shikimori.svg';
 import {useSocket} from '../../../security/SocketProvider';
-import {Injection} from '../Injection';
 import {useStyles} from './shikimoriStyles';
+import {useTranslation} from 'react-i18next';
 
 export const Shikimori = memo(({onSubmit, isLoading, setIsLoading}) => {
   const classes = useStyles();
+  const {t} = useTranslation();
   const socket = useSocket();
   const [username, setUsername] = useState('');
   const [countSongs, setCountSongs] = useState(1);
@@ -29,20 +31,20 @@ export const Shikimori = memo(({onSubmit, isLoading, setIsLoading}) => {
 
   return (
     <Injection
-      titleTooltip="Shikimori"
+      titleTooltip={t('web:app.injection.shikimori.tooltip', 'Shikimori')}
       buttonIcon={<SvgIcon component={ShikimoriIcon}/>}
       onSubmit={handleSubmit}
       isLoading={isLoading}
     >
-      <DialogTitle>Добавление op/ed из листа shikimori</DialogTitle>
+      <DialogTitle>{t('web:app.injection.shikimori.title', 'Добавление op/ed из листа shikimori')}</DialogTitle>
       <DialogContent>
         <DialogContentText className={classes.dialogText}>
-          В форме ниже можно выбрать профиль shikimori и количество случайных генерируемых композиций
+          {t('web:app.injection.shikimori.description', 'В форме ниже можно выбрать профиль shikimori и количество случайных генерируемых композиций')}
         </DialogContentText>
         {profiles
           ? <Select
             value={username}
-            label="Пользователь"
+            label={t('web:app.injection.shikimori.user', 'Пользователь')}
             autoWidth
             onChange={e => setUsername(e.target.value)}
             className={classes.select}

@@ -1,6 +1,7 @@
 import {Button, Checkbox, Chip, Dialog, DialogActions, DialogContent, DialogTitle, Divider, FormControlLabel, FormGroup, Typography} from '@mui/material';
 import {memo, useCallback, useEffect, useState} from 'react';
 import {useStyles} from './selectUsersStyles';
+import {useTranslation} from 'react-i18next';
 
 export const SelectUsers = memo(({
   open,
@@ -11,10 +12,11 @@ export const SelectUsers = memo(({
   defaultCheckedUserIds = [],
 }) => {
   const classes = useStyles();
+  const {t} = useTranslation();
   const [checked, setChecked] = useState(defaultCheckedUserIds);
 
   useEffect(() => {
-    setChecked((oldChanged) => [
+    setChecked(oldChanged => [
       ...oldChanged,
       ...defaultCheckedUserIds,
     ]);
@@ -54,13 +56,15 @@ export const SelectUsers = memo(({
 
   return (
     <Dialog open={open} onClose={handleClose}>
-      <DialogTitle>Добавление пользователей</DialogTitle>
+      <DialogTitle>{t('web:app.audit.selectUsers.title', 'Добавление пользователей')}</DialogTitle>
       <DialogContent dividers>
         {scopes?.length > 0
           ? <>
             <Typography color="primary" variant="body2">
-              Скопированы права доступа. Обратите внимание, что режим списка (белый или черный) НЕ копируется.
-              Все добавленные пользователи будут добавляться с ними:
+              {t(
+                'web:app.audit.selectUsers.description',
+                'Скопированы права доступа. Обратите внимание, что режим белового или черного списка НЕ копируется. Все добавленные пользователи будут добавляться с ними:',
+              )}
             </Typography>
             <Divider/>
             {scopes.map(scope => (
@@ -84,8 +88,8 @@ export const SelectUsers = memo(({
               />
             }
             label={checked.length === Object.values(users).length
-              ? 'Отвыбрать всех'
-              : 'Выбрать всех'}
+              ? t('common:app.toUnselectAll', 'Отвыбрать всех')
+              : t('common:app.toSelectAll', 'Выбрать всех')}
           />
           <Divider/>
           {Object.values(users)
@@ -105,8 +109,8 @@ export const SelectUsers = memo(({
         </FormGroup>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>Отмена</Button>
-        <Button onClick={handleSubmit}>Добавить</Button>
+        <Button onClick={handleClose}>{t('common:app.cancel', 'Отмена')}</Button>
+        <Button onClick={handleSubmit}>{t('common:app.add', 'Добавить')}</Button>
       </DialogActions>
     </Dialog>
   );

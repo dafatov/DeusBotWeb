@@ -1,7 +1,8 @@
-import {LoadingButton} from '@mui/lab';
 import {Button, Dialog, DialogActions, Tooltip} from '@mui/material';
 import {memo, useCallback, useState} from 'react';
+import {LoadingButton} from '@mui/lab';
 import {useStyles} from './injectionStyles';
+import {useTranslation} from 'react-i18next';
 
 export const Injection = memo(({
   children,
@@ -11,6 +12,7 @@ export const Injection = memo(({
   isLoading,
 }) => {
   const classes = useStyles();
+  const {t} = useTranslation();
   const [open, setOpen] = useState(false);
 
   const handleOpen = useCallback(() => setOpen(true), [setOpen]);
@@ -49,8 +51,8 @@ export const Injection = memo(({
       <Dialog open={open} onClose={handleClose}>
         {children}
         <DialogActions>
-          <Button onClick={handleClose}>Отмена</Button>
-          <Button disabled={isLoading} onClick={handleSubmit}>Добавить</Button>
+          <Button onClick={handleClose}>{t('common:app.cancel', 'Отмена')}</Button>
+          <Button disabled={isLoading} onClick={handleSubmit}>{t('common:app.add', 'Добавить')}</Button>
         </DialogActions>
       </Dialog>
     </div>

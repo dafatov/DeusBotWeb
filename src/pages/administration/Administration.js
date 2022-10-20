@@ -1,12 +1,14 @@
-import {ExpandMore} from '@mui/icons-material';
 import {Accordion, AccordionDetails, AccordionSummary, Box, Typography} from '@mui/material';
-import {memo} from 'react';
 import {Access} from '../../components/access/Access';
 import {Audit} from '../../components/audit/Audit';
+import {ExpandMore} from '@mui/icons-material';
+import {memo} from 'react';
 import {useStyles} from './administrationStyles';
+import {useTranslation} from 'react-i18next';
 
 export const Administration = memo(() => {
   const classes = useStyles();
+  const {t} = useTranslation();
 
   return (
     <Box className={classes.root}>
@@ -15,7 +17,7 @@ export const Administration = memo(() => {
           expandIcon={<ExpandMore/>}
           aria-controls="panel1a-content"
         >
-          <Typography color="primary">Аудит</Typography>
+          <Typography color="primary">{t('web:app.administration.audit', 'Аудит')}</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Audit/>
@@ -26,7 +28,7 @@ export const Administration = memo(() => {
           expandIcon={<ExpandMore/>}
           aria-controls="panel1a-content"
         >
-          <Typography color="primary">Доступ</Typography>
+          <Typography color="primary">{t('web:app.administration.access', 'Доступ')}</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Access/>

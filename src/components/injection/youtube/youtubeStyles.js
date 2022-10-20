@@ -1,6 +1,6 @@
 import {makeStyles} from '@mui/styles';
 
-export const useStyles = makeStyles((theme) => ({
+export const useStyles = makeStyles(theme => ({
   inputRoot: {
     paddingLeft: theme.spacing(1),
     paddingTop: theme.spacing(0.5),

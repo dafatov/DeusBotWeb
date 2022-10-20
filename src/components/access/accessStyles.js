@@ -1,7 +1,7 @@
 import {alpha} from '@mui/material/styles';
 import {makeStyles} from '@mui/styles';
 
-export const useStyles = makeStyles((theme) => ({
+export const useStyles = makeStyles(theme => ({
   scope: {
     marginRight: theme.spacing(),
     marginBottom: theme.spacing(),

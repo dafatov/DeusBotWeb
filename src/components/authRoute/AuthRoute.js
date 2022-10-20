@@ -1,6 +1,6 @@
+import {Redirect, Route} from 'react-router-dom';
 import {CircularProgress} from '@mui/material';
 import {memo} from 'react';
-import {Redirect, Route} from 'react-router-dom';
 
 export const AuthRoute = memo(({session, scope, ...props}) => {
   const isForbidden = !JSON.parse(localStorage.getItem('REACT_APP_SCOPES') || '[]')
@@ -10,7 +10,8 @@ export const AuthRoute = memo(({session, scope, ...props}) => {
     return <CircularProgress/>;
   }
 
-  return (session
+  return (
+    session
       ? isForbidden
         ? <Redirect to={{pathname: '/forbidden'}}/>
         : <Route {...props}/>

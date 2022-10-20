@@ -1,8 +1,10 @@
 import {Button, Card, CardContent, Stack, Typography} from '@mui/material';
 import {memo, useCallback} from 'react';
 import {useHistory} from 'react-router-dom';
+import {useTranslation} from 'react-i18next';
 
 export const Forbidden = memo(() => {
+  const {t} = useTranslation();
   const history = useHistory();
 
   const handleToMain = useCallback(() => {
@@ -16,9 +18,10 @@ export const Forbidden = memo(() => {
           direction="column"
           spacing={2}
         >
-          <Typography align="center" variant="h1">Ошибка 403</Typography>
-          <Typography>Страница не доступна текущему пользователю. Для получения доступа обратитесь к администратору</Typography>
-          <Button onClick={handleToMain}>На главную</Button>
+          <Typography align="center" variant="h1">{t('web:app.forbidden.title', 'Ошибка 403')}</Typography>
+          <Typography>{t(
+            'web:app.forbidden.description', 'Страница не доступна текущему пользователю. Для получения доступа обратитесь к администратору')}</Typography>
+          <Button onClick={handleToMain}>{t('common:app.toMain', 'На главную')}</Button>
         </Stack>
       </CardContent>
     </Card>

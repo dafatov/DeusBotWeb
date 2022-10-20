@@ -1,11 +1,13 @@
 import {Box, CircularProgress} from '@mui/material';
-import {memo, useEffect} from 'react';
-import {useHistory} from 'react-router-dom';
-import {authorization} from '../../api/securityApi';
 import {login, useAuth} from '../../security/AuthProvider';
+import {memo, useEffect} from 'react';
+import {authorization} from '../../api/securityApi';
+import {useHistory} from 'react-router-dom';
 import {useSnackBar} from '../../utils/snackBar';
+import {useTranslation} from 'react-i18next';
 
 export const Auth = memo(() => {
+  const {t} = useTranslation();
   const history = useHistory();
   const [logged] = useAuth();
   const {showWarning} = useSnackBar();
@@ -18,7 +20,7 @@ export const Auth = memo(() => {
         .then(s => login(s))
         .then(() => history.replace('/'));
     } else if (!logged && !code) {
-      showWarning('Пожалуйста пройдите авторизацию');
+      showWarning(t('web:app.auth.warning.noAuth', 'Пожалуйста пройдите авторизацию'));
       history.replace('/');
     } else {
       history.replace('/');

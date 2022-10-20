@@ -3,9 +3,11 @@ import {DialogContent, DialogContentText, DialogTitle, IconButton, InputBase, Pa
 import {memo, useRef, useState} from 'react';
 import {Injection} from '../Injection';
 import {useStyles} from './youtubeStyles';
+import {useTranslation} from 'react-i18next';
 
 export const Youtube = memo(({onSubmit, isLoading}) => {
   const classes = useStyles();
+  const {t} = useTranslation();
   const [field, setField] = useState('');
   const input = useRef(null);
 
@@ -20,16 +22,18 @@ export const Youtube = memo(({onSubmit, isLoading}) => {
 
   return (
     <Injection
-      titleTooltip="YouTube"
+      titleTooltip={t('web:app.injection.youtube.tooltip', 'YouTube')}
       buttonIcon={<YouTube/>}
       onSubmit={handleSubmit}
       isLoading={isLoading}
     >
-      <DialogTitle>Добавление композиций с youtube`а</DialogTitle>
+      <DialogTitle>{t('web:app.injection.youtube.title', 'Добавление композиций с youtube`а')}</DialogTitle>
       <DialogContent>
         <DialogContentText>
-          В форму ниже можно вставить ссылку на композицию или плейлист или поисковой запрос. Приватные или удаленные плейлисты и песни не могут быть
-          воспроизведены
+          {t(
+            'web:app.injection.youtube.description',
+            'В форму ниже можно вставить ссылку на композицию или плейлист или поисковой запрос. Приватные или удаленные плейлисты и песни не могут быть воспроизведены',
+          )}
         </DialogContentText>
         <Paper
           component="form"
@@ -38,10 +42,10 @@ export const Youtube = memo(({onSubmit, isLoading}) => {
         >
           <InputBase
             id="input"
-            label="Ссылка или поисковой запрос"
+            label={t('web:app.injection.youtube.linkOrSearch', 'Ссылка или поисковой запрос')}
             value={field}
             inputRef={input}
-            onChange={(e) => setField(e.target.value)}
+            onChange={e => setField(e.target.value)}
             autoFocus
             fullWidth
           />
