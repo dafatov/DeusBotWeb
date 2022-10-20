@@ -9,7 +9,6 @@ export const useInterval = (callback, delay, dependencies) => {
 
   useEffect(() => {
     savedCallback.current();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, dependencies);
 
   useEffect(() => {
