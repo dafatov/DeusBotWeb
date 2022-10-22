@@ -1,10 +1,10 @@
 import {Box, CircularProgress} from '@mui/material';
-import {memo, useEffect} from 'react';
-import {useTranslation} from 'react-i18next';
-import {useHistory} from 'react-router-dom';
-import {authorization} from '../../api/securityApi';
 import {login, useAuth} from '../../security/AuthProvider';
+import {memo, useEffect} from 'react';
+import {authorization} from '../../api/securityApi';
+import {useHistory} from 'react-router-dom';
 import {useSnackBar} from '../../utils/snackBar';
+import {useTranslation} from 'react-i18next';
 
 export const Auth = memo(() => {
   const {t} = useTranslation();

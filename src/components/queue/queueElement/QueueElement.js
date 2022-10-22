@@ -1,11 +1,11 @@
+import {Avatar, Divider, Stack, Typography} from '@mui/material';
 import {Delete} from '@mui/icons-material';
 import {LoadingButton} from '@mui/lab';
-import {Avatar, Divider, Stack, Typography} from '@mui/material';
-import {motion} from 'framer-motion';
 import {memo} from 'react';
-import {useTranslation} from 'react-i18next';
+import {motion} from 'framer-motion';
 import {timeFormatMilliseconds} from '../../../utils/dateTime';
 import {useStyles} from './queueElementStyles';
+import {useTranslation} from 'react-i18next';
 
 export const QueueElement = memo(({index, length, element, loading = false, onRemove}) => {
   const classes = useStyles();

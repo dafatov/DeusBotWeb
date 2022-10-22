@@ -1,14 +1,14 @@
 import {Autorenew, HorizontalRule, Pause, PlayArrow, SkipNext} from '@mui/icons-material';
-import {LoadingButton} from '@mui/lab';
 import {Card, CardContent, CircularProgress, Paper, Stack, Tooltip, Typography} from '@mui/material';
 import {memo, useCallback, useEffect, useState} from 'react';
-import {useTranslation} from 'react-i18next';
-import {useAuth} from '../../security/AuthProvider';
-import {useSocket} from '../../security/SocketProvider';
-import {useSnackBar} from '../../utils/snackBar';
-import {useInterval} from '../../utils/useInterval';
+import {LoadingButton} from '@mui/lab';
 import {PlayerTimeline} from '../playerTimeline/PlayerTimeline';
+import {useAuth} from '../../security/AuthProvider';
+import {useInterval} from '../../utils/useInterval';
+import {useSnackBar} from '../../utils/snackBar';
+import {useSocket} from '../../security/SocketProvider';
 import {useStyles} from './nowPlayingStyles';
+import {useTranslation} from 'react-i18next';
 
 export const NowPlaying = memo(({nowPlaying, isLoading, setIsLoading}) => {
   const classes = useStyles();

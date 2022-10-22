@@ -1,7 +1,7 @@
-import i18next from 'i18next';
-import languageDetector from 'i18next-browser-languagedetector';
 import backend from 'i18next-http-backend';
+import i18next from 'i18next';
 import {initReactI18next} from 'react-i18next';
+import languageDetector from 'i18next-browser-languagedetector';
 
 // eslint-disable-next-line import/no-named-as-default-member
 i18next

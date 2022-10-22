@@ -1,4 +1,4 @@
-import {Avatar, LinearProgress, Stack, styled, Typography} from '@mui/material';
+import {Avatar, LinearProgress, Stack, Typography, styled} from '@mui/material';
 import {memo} from 'react';
 import {timeFormatMilliseconds} from '../../utils/dateTime';
 import {useStyles} from './playerTimelineStyles';

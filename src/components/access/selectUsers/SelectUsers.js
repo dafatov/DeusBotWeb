@@ -1,7 +1,7 @@
 import {Button, Checkbox, Chip, Dialog, DialogActions, DialogContent, DialogTitle, Divider, FormControlLabel, FormGroup, Typography} from '@mui/material';
 import {memo, useCallback, useEffect, useState} from 'react';
-import {useTranslation} from 'react-i18next';
 import {useStyles} from './selectUsersStyles';
+import {useTranslation} from 'react-i18next';
 
 export const SelectUsers = memo(({
   open,

@@ -1,11 +1,11 @@
-import {Grid} from '@mui/material';
 import {memo, useEffect, useState} from 'react';
 import {Control} from '../../components/control/Control';
+import {Grid} from '@mui/material';
 import {NowPlaying} from '../../components/nowPlaying/NowPlaying';
 import {Queue} from '../../components/queue/Queue';
 import {useAuth} from '../../security/AuthProvider';
-import {useSocket} from '../../security/SocketProvider';
 import {useInterval} from '../../utils/useInterval';
+import {useSocket} from '../../security/SocketProvider';
 import {useStyles} from './playerStyles';
 
 //TODO потенциальная проблема: если при совпадении таймингов регулярного обновления

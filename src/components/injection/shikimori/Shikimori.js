@@ -1,10 +1,10 @@
 import {CircularProgress, DialogContent, DialogContentText, DialogTitle, MenuItem, Select, Slider, Stack, SvgIcon, TextField} from '@mui/material';
 import {memo, useCallback, useEffect, useState} from 'react';
-import {useTranslation} from 'react-i18next';
+import {Injection} from '../Injection';
 import {ReactComponent as ShikimoriIcon} from '../../../assets/icons/shikimori.svg';
 import {useSocket} from '../../../security/SocketProvider';
-import {Injection} from '../Injection';
 import {useStyles} from './shikimoriStyles';
+import {useTranslation} from 'react-i18next';
 
 export const Shikimori = memo(({onSubmit, isLoading, setIsLoading}) => {
   const classes = useStyles();

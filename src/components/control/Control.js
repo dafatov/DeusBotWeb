@@ -1,15 +1,15 @@
-import {ClearAll, Shuffle} from '@mui/icons-material';
-import {LoadingButton} from '@mui/lab';
 import {Card, CardContent, Divider, Paper, Stack, Tooltip, Typography} from '@mui/material';
+import {ClearAll, Shuffle} from '@mui/icons-material';
 import {memo, useCallback} from 'react';
-import {useTranslation} from 'react-i18next';
-import {useAuth} from '../../security/AuthProvider';
-import {useSocket} from '../../security/SocketProvider';
-import {useSnackBar} from '../../utils/snackBar';
+import {LoadingButton} from '@mui/lab';
 import {Radio} from '../injection/radio/Radio';
 import {Shikimori} from '../injection/shikimori/Shikimori';
 import {Youtube} from '../injection/youtube/Youtube';
+import {useAuth} from '../../security/AuthProvider';
+import {useSnackBar} from '../../utils/snackBar';
+import {useSocket} from '../../security/SocketProvider';
 import {useStyles} from './controlStyles';
+import {useTranslation} from 'react-i18next';
 
 export const Control = memo(({isLoading, setIsLoading}) => {
   const classes = useStyles();

@@ -1,7 +1,7 @@
 import {Button, Card, CardContent, Stack, Typography} from '@mui/material';
 import {memo, useCallback} from 'react';
-import {useTranslation} from 'react-i18next';
 import {useHistory} from 'react-router-dom';
+import {useTranslation} from 'react-i18next';
 
 export const Forbidden = memo(() => {
   const {t} = useTranslation();

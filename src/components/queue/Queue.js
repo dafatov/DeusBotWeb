@@ -1,14 +1,14 @@
 import {Card, CardContent, Typography} from '@mui/material';
-import {motion} from 'framer-motion';
 import {memo, useCallback} from 'react';
-import ReactDragListView from 'react-drag-listview';
-import {useTranslation} from 'react-i18next';
-import {Scrollbar} from 'react-scrollbars-custom';
-import {useAuth} from '../../security/AuthProvider';
-import {useSocket} from '../../security/SocketProvider';
-import {useSnackBar} from '../../utils/snackBar';
 import {QueueElement} from './queueElement/QueueElement';
+import ReactDragListView from 'react-drag-listview';
+import {Scrollbar} from 'react-scrollbars-custom';
+import {motion} from 'framer-motion';
+import {useAuth} from '../../security/AuthProvider';
+import {useSnackBar} from '../../utils/snackBar';
+import {useSocket} from '../../security/SocketProvider';
 import {useStyles} from './queueStyles';
+import {useTranslation} from 'react-i18next';
 
 //TODO отключать перемещение элементов при загрузке
 //TODO отключать таймер при потере связи с сервером (а лучше вообще это как-то обрабатывать)

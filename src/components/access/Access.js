@@ -1,19 +1,19 @@
 import {AddCircle, ContentCopy, Delete, Deselect, RestoreFromTrash, Save, SelectAll, ToggleOff, ToggleOn} from '@mui/icons-material';
 import {Chip, CircularProgress, IconButton, Tooltip, Typography} from '@mui/material';
-import classNames from 'classnames';
-import MUIDataTable from 'mui-datatables';
 import {memo, useCallback, useEffect, useMemo, useState} from 'react';
-import {useTranslation} from 'react-i18next';
-import {getProfile} from '../../api/profileApi';
-import {defaultOptions} from '../../configs/muiDataTable';
-import {useAuth} from '../../security/AuthProvider';
-import {useSocket} from '../../security/SocketProvider';
-import {theme} from '../../styles/theme';
-import {useSnackBar} from '../../utils/snackBar';
-import {useInterval} from '../../utils/useInterval';
-import {useStyles} from './accessStyles';
+import MUIDataTable from 'mui-datatables';
 import {SelectScopes} from './selectScopes/SelectScopes';
 import {SelectUsers} from './selectUsers/SelectUsers';
+import classNames from 'classnames';
+import {defaultOptions} from '../../configs/muiDataTable';
+import {getProfile} from '../../api/profileApi';
+import {theme} from '../../styles/theme';
+import {useAuth} from '../../security/AuthProvider';
+import {useInterval} from '../../utils/useInterval';
+import {useSnackBar} from '../../utils/snackBar';
+import {useSocket} from '../../security/SocketProvider';
+import {useStyles} from './accessStyles';
+import {useTranslation} from 'react-i18next';
 
 export const Access = memo(() => {
   const SESSION_STORAGE_KEY = 'REACT_APP_ACCESS_PATCH';

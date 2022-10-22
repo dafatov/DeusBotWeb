@@ -1,9 +1,9 @@
 import {Clear, YouTube} from '@mui/icons-material';
 import {DialogContent, DialogContentText, DialogTitle, IconButton, InputBase, Paper} from '@mui/material';
 import {memo, useRef, useState} from 'react';
-import {useTranslation} from 'react-i18next';
 import {Injection} from '../Injection';
 import {useStyles} from './youtubeStyles';
+import {useTranslation} from 'react-i18next';
 
 export const Youtube = memo(({onSubmit, isLoading}) => {
   const classes = useStyles();

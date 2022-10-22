@@ -1,8 +1,8 @@
 // eslint-disable-next-line filenames/no-index
+import './i18n';
+import {App} from './app/App';
 import React from 'react';
 import {render} from 'react-dom';
-import {App} from './app/App';
-import './i18n';
 
 render(
   <React.StrictMode>

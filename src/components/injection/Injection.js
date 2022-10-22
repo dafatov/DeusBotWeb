@@ -1,8 +1,8 @@
-import {LoadingButton} from '@mui/lab';
 import {Button, Dialog, DialogActions, Tooltip} from '@mui/material';
 import {memo, useCallback, useState} from 'react';
-import {useTranslation} from 'react-i18next';
+import {LoadingButton} from '@mui/lab';
 import {useStyles} from './injectionStyles';
+import {useTranslation} from 'react-i18next';
 
 export const Injection = memo(({
   children,

@@ -1,15 +1,15 @@
-import {Stack} from '@mui/material';
-import {memo, useEffect, useState} from 'react';
 import {Route, Switch} from 'react-router-dom';
-import {Bar} from '../bar/Bar';
-import {AuthRoute} from '../components/authRoute/AuthRoute';
-import changelog from '../configs/changelog';
+import {memo, useEffect, useState} from 'react';
 import {Administration} from '../pages/administration/Administration';
 import {Auth} from '../pages/auth/Auth';
+import {AuthRoute} from '../components/authRoute/AuthRoute';
+import {Bar} from '../bar/Bar';
 import {Forbidden} from '../pages/forbidden/Forbidden';
 import {Landing} from '../pages/landing/Landing';
 import {NotFound} from '../pages/notFound/NotFound';
 import {Player} from '../pages/player/Player';
+import {Stack} from '@mui/material';
+import changelog from '../configs/changelog';
 import {useAuth} from '../security/AuthProvider';
 import {useSocket} from '../security/SocketProvider';
 

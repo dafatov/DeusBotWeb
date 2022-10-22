@@ -1,10 +1,10 @@
-import {ExpandMore} from '@mui/icons-material';
 import {Accordion, AccordionDetails, AccordionSummary, Box, Typography} from '@mui/material';
-import {memo} from 'react';
-import {useTranslation} from 'react-i18next';
 import {Access} from '../../components/access/Access';
 import {Audit} from '../../components/audit/Audit';
+import {ExpandMore} from '@mui/icons-material';
+import {memo} from 'react';
 import {useStyles} from './administrationStyles';
+import {useTranslation} from 'react-i18next';
 
 export const Administration = memo(() => {
   const classes = useStyles();

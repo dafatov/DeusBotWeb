@@ -1,10 +1,10 @@
-import {Radio as RadioIcon} from '@mui/icons-material';
 import {CircularProgress, DialogContent, DialogContentText, DialogTitle, MenuItem, Select} from '@mui/material';
 import {memo, useCallback, useEffect, useState} from 'react';
-import {useTranslation} from 'react-i18next';
-import {useSocket} from '../../../security/SocketProvider';
 import {Injection} from '../Injection';
+import {Radio as RadioIcon} from '@mui/icons-material';
+import {useSocket} from '../../../security/SocketProvider';
 import {useStyles} from './radioStyles';
+import {useTranslation} from 'react-i18next';
 
 export const Radio = memo(({onSubmit, isLoading, setIsLoading}) => {
   const classes = useStyles();

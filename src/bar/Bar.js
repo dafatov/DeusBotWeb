@@ -1,12 +1,12 @@
-import {Login, Logout} from '@mui/icons-material';
 import {AppBar, Avatar, Box, Button, Container, Divider, Fab, IconButton, ListItemIcon, Menu, MenuItem, Toolbar, Tooltip, Typography} from '@mui/material';
+import {Login, Logout} from '@mui/icons-material';
+import {logout, useAuth} from '../security/AuthProvider';
 import {memo, useCallback, useEffect, useState} from 'react';
-import {useTranslation} from 'react-i18next';
-import {useHistory} from 'react-router-dom';
 import {getProfile} from '../api/profileApi';
 import {redirect_url} from '../api/securityApi';
-import {logout, useAuth} from '../security/AuthProvider';
+import {useHistory} from 'react-router-dom';
 import {useStyles} from './barStyles';
+import {useTranslation} from 'react-i18next';
 
 const auth_url_params = `client_id=${process.env.REACT_APP_CLIENT_ID}&redirect_uri=${redirect_url}&response_type=code&scope=${process.env.REACT_APP_DISCORD_SCOPES}`;
 const auth_url = `${process.env.REACT_APP_DISCORD_API_URL}/oauth2/authorize?${auth_url_params}`;
