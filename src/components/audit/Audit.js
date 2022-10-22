@@ -2,6 +2,7 @@ import {CircularProgress, Typography} from '@mui/material';
 import moment from 'moment-timezone';
 import MUIDataTable from 'mui-datatables';
 import {memo, useEffect, useMemo, useState} from 'react';
+import {useTranslation} from 'react-i18next';
 import {defaultOptions} from '../../configs/muiDataTable';
 import {useAuth} from '../../security/AuthProvider';
 import {useSocket} from '../../security/SocketProvider';
@@ -9,6 +10,7 @@ import {useSnackBar} from '../../utils/snackBar';
 import {useInterval} from '../../utils/useInterval';
 
 export const Audit = memo(() => {
+  const {t} = useTranslation();
   const [isLoading, setIsLoading] = useState(true);
   const [isPendingAudit, setIsPendingAudit] = useState(false);
   const [isPendingGuilds, setIsPendingGuilds] = useState(false);
@@ -65,11 +67,11 @@ export const Audit = memo(() => {
   const columns = useMemo(() => [
     {
       name: 'created_at',
-      label: 'Дата/время',
+      label: t('web:app.audit.table.createdAt.title', 'Дата/время'),
       options: {
         filter: false,
         searchable: false,
-        customBodyRender: (value) => moment.utc(value).local().toDate().toLocaleString('ru-RU', {
+        customBodyRender: value => moment.utc(value).local().toDate().toLocaleString('ru-RU', {
           year: 'numeric',
           month: '2-digit',
           day: '2-digit',
@@ -81,19 +83,19 @@ export const Audit = memo(() => {
       },
     }, {
       name: 'guildId',
-      label: 'Сервер',
+      label: t('web:app.audit.table.guild.title', 'Сервер'),
       options: {
-        customBodyRender: (value) => guilds?.[value]?.name ?? '-',
+        customBodyRender: value => guilds?.[value]?.name ?? '-',
       },
     }, {
       name: 'type',
-      label: 'Тип',
+      label: t('web:app.audit.table.type.title', 'Тип'),
     }, {
       name: 'category',
-      label: 'Категория',
+      label: t('web:app.audit.table.category.title', 'Категория'),
     }, {
       name: 'message',
-      label: 'Сообщение',
+      label: t('web:app.audit.table.message.title', 'Сообщение'),
       options: {
         filter: false,
         sort: false,
@@ -115,7 +117,7 @@ export const Audit = memo(() => {
   }
 
   if (!audit) {
-    return <Typography color="primary" variant="body2">Данные недоступны</Typography>;
+    return <Typography color="primary" variant="body2">{t('common:app.dataNotAvailable', 'Данные недоступны')}</Typography>;
   }
 
   return (

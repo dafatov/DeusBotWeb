@@ -2,7 +2,8 @@ import {Card, CardContent, Typography} from '@mui/material';
 import {motion} from 'framer-motion';
 import {memo, useCallback} from 'react';
 import ReactDragListView from 'react-drag-listview';
-import Scrollbar from 'react-scrollbars-custom';
+import {useTranslation} from 'react-i18next';
+import {Scrollbar} from 'react-scrollbars-custom';
 import {useAuth} from '../../security/AuthProvider';
 import {useSocket} from '../../security/SocketProvider';
 import {useSnackBar} from '../../utils/snackBar';
@@ -14,6 +15,7 @@ import {useStyles} from './queueStyles';
 //TODO добавить локальное предсказание ответа сервера (просто делать то что и сервер до его ответа)
 export const Queue = memo(({songs, isLoading, setIsLoading}) => {
   const classes = useStyles();
+  const {t} = useTranslation();
   const {showSuccess, showWarning} = useSnackBar();
   const [, session] = useAuth();
   const socket = useSocket();
@@ -24,7 +26,7 @@ export const Queue = memo(({songs, isLoading, setIsLoading}) => {
       if (data.result) {
         showWarning(data.result);
       } else {
-        showSuccess(`Успешно удалена композиция: "${data.isRemoved.title}"`);
+        showSuccess(t('web:app.nowPlaying.success.skipped', 'Успешно удалена композиция: "{{title}}"'), {title: data.isRemoved.title});
       }
     });
   }, [setIsLoading, socket, session, showSuccess, showWarning]);
@@ -35,7 +37,9 @@ export const Queue = memo(({songs, isLoading, setIsLoading}) => {
       if (data.result) {
         showWarning(data.result);
       } else {
-        showSuccess(`Успешно перемещена на "${data.newIndex + 1}" позицию композиция: "${data.isMoved.title}"`);
+        showSuccess(t('web:app.nowPlaying.success.skipped', 'Успешно перемещена на "{{target}}" позицию композиция: "{{title}}"',
+          {target: data.newIndex + 1, title: data.isMoved.title},
+        ));
       }
     });
   }, [setIsLoading, socket, session, showSuccess, showWarning]);
@@ -79,7 +83,7 @@ export const Queue = memo(({songs, isLoading, setIsLoading}) => {
               justifyContent="center"
               alignContent="center"
             >
-              Идет загрузка...
+              {t('web:app.queue.loading', 'Идет загрузка...')}
             </Typography>
           </motion.div>
         }

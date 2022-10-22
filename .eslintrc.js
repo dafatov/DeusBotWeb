@@ -1,4 +1,3 @@
-// eslint-disable-next-line filenames/match-regex
 const MAX_ARGUMENTS = 5;
 const INDENT = 2;
 
@@ -10,7 +9,7 @@ module.exports = {
     'es6': true,
     'node': true,
   },
-  //'extends': ['eslint:recommended', 'plugin:i18next/recommended', 'plugin:import/recommended', 'plugin:react/recommended'],
+  'extends': ['eslint:recommended', 'plugin:i18next/recommended', 'plugin:import/recommended', 'plugin:react/recommended'],
   'parser': '@babel/eslint-parser',
   'parserOptions': {
     'allowImportExportEverywhere': false,
@@ -21,10 +20,10 @@ module.exports = {
     'sourceType': 'module',
   },
   'plugins': ['i18next', 'import', 'sort-imports-requires', 'filenames', 'arguments', 'react', 'no-loops'],
-  /*'rules': {
+  'rules': {
     'arrow-parens': ['error', 'as-needed'],
     'filenames/match-exported': 2,
-    'filenames/match-regex': [2, '^[a-zA-Z_][a-zA-Z]+$', true],
+    'filenames/match-regex': [2, '^[a-zA-Z_.][a-zA-Z0-9]+$', true],
     'filenames/no-index': 2,
     'func-style': ['error', 'declaration', {'allowArrowFunctions': true}],
     'indent': [
@@ -45,7 +44,7 @@ module.exports = {
     'no-duplicate-imports': 'error',
     //'no-magic-numbers': 'error',
     'no-lonely-if': 'error',
-    "no-loops/no-loops": 2,
+    'no-loops/no-loops': 2,
     'no-multi-assign': 'error',
     'no-multi-spaces': 'error',
     'no-multi-str': 'error',
@@ -81,5 +80,5 @@ module.exports = {
     'react': {
       'version': 'detect',
     },
-  },*/
+  },
 };

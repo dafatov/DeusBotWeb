@@ -1,5 +1,6 @@
 import {Button, Checkbox, Dialog, DialogActions, DialogContent, DialogTitle, Divider, FormControlLabel, FormGroup, Typography} from '@mui/material';
 import {memo, useCallback, useEffect, useState} from 'react';
+import {useTranslation} from 'react-i18next';
 
 export const SelectScopes = memo(({
   open,
@@ -11,6 +12,7 @@ export const SelectScopes = memo(({
   isWhiteListPermission,
   userId,
 }) => {
+  const {t} = useTranslation();
   const [checked, setChecked] = useState([]);
 
   useEffect(() => {
@@ -50,12 +52,14 @@ export const SelectScopes = memo(({
 
   return (
     <Dialog open={open} onClose={handleClose}>
-      <DialogTitle>Добавление прав доступа</DialogTitle>
+      <DialogTitle>{t('web:app.audit.selectScopes.title', 'Добавление прав доступа')}</DialogTitle>
       <DialogContent dividers>
         <Typography color="primary" variant="body2">
-          Учтите, что список в режиме {isWhiteListPermission(patch, userId)
-          ? 'БЕЛОГО'
-          : 'ЧЕРНОГО'} списка
+          {t('web:app.audit.selectScopes.description', 'Учтите, что список в режиме {{mode}} списка', {
+            mode: isWhiteListPermission(patch, userId)
+              ? t('common:app.white', 'БЕЛОГО')
+              : t('common:app.black', 'ЧЕРНОГО'),
+          })}
         </Typography>
         <Divider/>
         <FormGroup>
@@ -67,8 +71,8 @@ export const SelectScopes = memo(({
               />
             }
             label={checked?.length === scopes?.length
-              ? 'Отвыбрать всех'
-              : 'Выбрать всех'}
+              ? t('common:app.toUnselect', 'Отвыбрать всех')
+              : t('common:app.toSelect', 'Выбрать всех')}
           />
           <Divider/>
           {scopes?.sort((a, b) => a.localeCompare(b))
@@ -87,8 +91,8 @@ export const SelectScopes = memo(({
         </FormGroup>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>Отмена</Button>
-        <Button onClick={handleSubmit}>Добавить</Button>
+        <Button onClick={handleClose}>{t('common:app.cancel', 'Отмена')}</Button>
+        <Button onClick={handleSubmit}>{t('common:app.add', 'Добавить')}</Button>
       </DialogActions>
     </Dialog>
   );

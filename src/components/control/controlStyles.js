@@ -1,6 +1,6 @@
 import {makeStyles} from '@mui/styles';
 
-export const useStyles = makeStyles((theme) => ({
+export const useStyles = makeStyles(theme => ({
   blockRoot: {
     padding: theme.spacing(1),
     width: '100%',

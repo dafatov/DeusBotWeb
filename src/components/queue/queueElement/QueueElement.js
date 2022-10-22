@@ -3,11 +3,13 @@ import {LoadingButton} from '@mui/lab';
 import {Avatar, Divider, Stack, Typography} from '@mui/material';
 import {motion} from 'framer-motion';
 import {memo} from 'react';
+import {useTranslation} from 'react-i18next';
 import {timeFormatMilliseconds} from '../../../utils/dateTime';
 import {useStyles} from './queueElementStyles';
 
 export const QueueElement = memo(({index, length, element, loading = false, onRemove}) => {
   const classes = useStyles();
+  const {t} = useTranslation();
 
   return (
     <Stack
@@ -73,7 +75,7 @@ export const QueueElement = memo(({index, length, element, loading = false, onRe
         color="primary"
         value="remove"
         size="small"
-        aria-label="удалить"
+        aria-label={t('common:app.remove', 'Удалить')}
         onClick={() => onRemove(index)}
         className={classes.loadingButton}
       >

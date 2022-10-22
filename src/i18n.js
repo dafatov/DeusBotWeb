@@ -3,6 +3,7 @@ import languageDetector from 'i18next-browser-languagedetector';
 import backend from 'i18next-http-backend';
 import {initReactI18next} from 'react-i18next';
 
+// eslint-disable-next-line import/no-named-as-default-member
 i18next
   .use(backend)
   .use(languageDetector)
@@ -23,7 +24,7 @@ i18next
       escapeValue: false,
     },
     load: 'currentOnly',
-    ns: ['web'],
+    ns: ['web', 'common'],
     saveMissing: true,
     supportedLngs: ['en', 'ru'],
   });

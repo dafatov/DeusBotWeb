@@ -4,7 +4,7 @@ export const redirect_url = `http${process.env.REACT_APP_PROFILE === 'DEV'
   ? ''
   : 's'}://${process.env.REACT_APP_CLIENT_URI}/auth`;
 
-export const authorization = (code) =>
+export const authorization = code =>
   fetch(discord_auth_url, {
     method: 'POST',
     headers: {
@@ -19,7 +19,7 @@ export const authorization = (code) =>
     }),
   }).then(r => r.json());
 
-export const reauthorization = (refresh_token) =>
+export const reauthorization = refresh_token =>
   fetch(discord_auth_url, {
     method: 'POST',
     headers: {

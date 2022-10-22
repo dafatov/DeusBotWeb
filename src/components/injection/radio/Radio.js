@@ -1,12 +1,14 @@
 import {Radio as RadioIcon} from '@mui/icons-material';
 import {CircularProgress, DialogContent, DialogContentText, DialogTitle, MenuItem, Select} from '@mui/material';
 import {memo, useCallback, useEffect, useState} from 'react';
+import {useTranslation} from 'react-i18next';
 import {useSocket} from '../../../security/SocketProvider';
 import {Injection} from '../Injection';
 import {useStyles} from './radioStyles';
 
 export const Radio = memo(({onSubmit, isLoading, setIsLoading}) => {
   const classes = useStyles();
+  const {t} = useTranslation();
   const socket = useSocket();
   const [radios, setRadios] = useState(null);
   const [radio, setRadio] = useState('');
@@ -28,20 +30,20 @@ export const Radio = memo(({onSubmit, isLoading, setIsLoading}) => {
 
   return (
     <Injection
-      titleTooltip="Radio"
+      titleTooltip={t('web:app.injection.radio.tooltip', 'Радио')}
       buttonIcon={<RadioIcon/>}
       onSubmit={handleSubmit}
       isLoading={isLoading}
     >
-      <DialogTitle>Добавление потоковой радиостанции</DialogTitle>
+      <DialogTitle>{t('web:app.injection.radio.title', 'Добавление потоковой радиостанции')}</DialogTitle>
       <DialogContent>
         <DialogContentText className={classes.dialogText}>
-          В форме ниже можно выбрать радиостанцию
+          {t('web:app.injection.radio.description', 'В форме ниже можно выбрать радиостанцию')}
         </DialogContentText>
         {radios
           ? <Select
             value={radio}
-            label="Радиостанция"
+            label={t('web:app.injection.radio.station', 'Радиостанция')}
             autoWidth
             onChange={e => setRadio(e.target.value)}
             className={classes.select}

@@ -3,6 +3,7 @@ import {Chip, CircularProgress, IconButton, Tooltip, Typography} from '@mui/mate
 import classNames from 'classnames';
 import MUIDataTable from 'mui-datatables';
 import {memo, useCallback, useEffect, useMemo, useState} from 'react';
+import {useTranslation} from 'react-i18next';
 import {getProfile} from '../../api/profileApi';
 import {defaultOptions} from '../../configs/muiDataTable';
 import {useAuth} from '../../security/AuthProvider';
@@ -18,6 +19,7 @@ export const Access = memo(() => {
   const SESSION_STORAGE_KEY = 'REACT_APP_ACCESS_PATCH';
 
   const classes = useStyles();
+  const {t} = useTranslation();
   const [isLoading, setIsLoading] = useState(true);
   const [isPendingPermissions, setIsPendingPermissions] = useState(true);
   const [isPendingUsers, setIsPendingUsers] = useState(true);
@@ -102,7 +104,7 @@ export const Access = memo(() => {
     }
   }, [patch]);
 
-  const updatePatch = useCallback((onSetPatch) => {
+  const updatePatch = useCallback(onSetPatch => {
     setPatch(oldPatch => {
       const newPatch = onSetPatch(oldPatch);
 
@@ -111,7 +113,7 @@ export const Access = memo(() => {
     });
   }, []);
 
-  const clonePatch = useCallback((oldPatch) => ({
+  const clonePatch = useCallback(oldPatch => ({
     ...oldPatch,
     created: [...oldPatch.created],
     deleted: [...oldPatch.deleted],
@@ -225,7 +227,7 @@ export const Access = memo(() => {
         .every(scope => findUpdatedScopes(patch, userId)?.includes(scope)))
       || (!isWhiteListPermission(patch, userId) && [scopes.API_PERMISSION_SET, scopes.API_PERMISSION_PERMISSIONS, scopes.PAGE_ADMINISTRATION]
         .some(scope => findUpdatedScopes(patch, userId)?.includes(scope)))) {
-      showWarning('Нельзя удалить самого себя или роли для управления данной вкладкой');
+      showWarning(t('web:app.access.warning.selfRemoving', 'Нельзя удалить самого себя или роли для управления данной вкладкой'));
       return;
     }
 
@@ -247,7 +249,7 @@ export const Access = memo(() => {
         }
       });
     } else {
-      showError('Нет связи с сервером');
+      showError(t('web:app.access.error.noConnection', 'Нет связи с сервером'));
     }
   }, [findUpdatedScopes, isDeleted, isWhiteListPermission, patch, scopes, session, showError, showSuccess, showWarning, socket, updatePatch]);
 
@@ -270,12 +272,12 @@ export const Access = memo(() => {
   );
 
   const isPatched = useCallback(
-    (oldPatch) =>
+    oldPatch =>
       oldPatch.created.length <= 0 && oldPatch.updated.length <= 0 && oldPatch.deleted.length <= 0,
     [],
   );
 
-  const handleDeleteScopes = useCallback((userId) => {
+  const handleDeleteScopes = useCallback(userId => {
     updatePatch(oldPatch => ({
       ...oldPatch,
       updated: [
@@ -288,7 +290,7 @@ export const Access = memo(() => {
     }));
   }, [updatePatch, findPermission, subtractPermissionFromUpdated]);
 
-  const handleRestoreScopes = useCallback((userId) => {
+  const handleRestoreScopes = useCallback(userId => {
     updatePatch(oldPatch => ({
       ...oldPatch,
       updated: subtractPermissionFromUpdated(oldPatch, userId),
@@ -452,7 +454,7 @@ export const Access = memo(() => {
     () => [
       {
         name: 'user_id',
-        label: 'Пользователь',
+        label: t('web:app.access.table.user.title', 'Пользователь'),
         options: {
           customHeadLabelRender: ({label}) =>
             <div className={classes.userHeader}>
@@ -478,7 +480,7 @@ export const Access = memo(() => {
         },
       }, {
         name: 'scopes',
-        label: 'Права доступа',
+        label: t('web:app.access.table.scopes.title', 'Права доступа'),
         options: {
           sort: false,
           customBodyRenderLite: dataIndex => {
@@ -486,11 +488,11 @@ export const Access = memo(() => {
 
             return (
               <>
-                {!isWhiteListPermission(patch, userId)
-                  ? <Typography variant="body2" color="primary">
-                    Все права доступны
-                  </Typography>
-                  : <></>}
+                {isWhiteListPermission(patch, userId)
+                  ? <></>
+                  : <Typography variant="body2" color="primary">
+                    {t('web:app.access.table.scopes.allAvailable', 'Все права доступны')}
+                  </Typography>}
                 {findPermissionScopes(patch, userId)
                   .concat(subtractPermissionFromUpdatedScopes(patch, userId))
                   .map(scope =>
@@ -516,8 +518,8 @@ export const Access = memo(() => {
                 <Chip
                   color="primary"
                   label={isWhiteListPermission(patch, userId)
-                    ? 'Добавить'
-                    : 'Добавить исключения'}
+                    ? t('common:app.add', 'Добавить')
+                    : t('common:app.addException', 'Добавить исключения')}
                   disabled={isDeleted(patch, userId)}
                   className={classes.addScope}
                   onClick={() => {
@@ -537,14 +539,15 @@ export const Access = memo(() => {
           filter: false,
           searchable: false,
           customHeadLabelRender: () =>
-            <Tooltip title="Применить">
+            <Tooltip title={t('common:app.apply', 'Применить')}>
               <span>
                 <IconButton
-                  children={<Save/>}
                   color="primary"
                   disabled={isPatched(patch)}
                   onClick={async () => await handleSubmit()}
-                />
+                >
+                  <Save/>
+                </IconButton>
               </span>
             </Tooltip>,
           customBodyRenderLite: dataIndex => {
@@ -552,66 +555,73 @@ export const Access = memo(() => {
 
             return (
               <>
-                <Tooltip title="Скопировать">
+                <Tooltip title={t('common:app.copy', 'Скопировать')}>
                   <span>
                     <IconButton
-                      children={<ContentCopy/>}
                       color="primary"
                       disabled={isDeleted(patch, userId) || isLoading}
                       onClick={() => handleCopyUser(patch, userId)}
-                    />
+                    >
+                      <ContentCopy/>
+                    </IconButton>
                   </span>
                 </Tooltip>
                 {isDeleted(patch, userId)
-                  ? <Tooltip title="Восстановить">
+                  ? <Tooltip title={t('common:app.restore', 'Восстановить')}>
                     <IconButton
-                      children={<RestoreFromTrash/>}
                       color="primary"
                       onClick={() => handleRestoreUser(userId)}
-                    />
+                    >
+                      <RestoreFromTrash/>
+                    </IconButton>
                   </Tooltip>
-                  : <Tooltip title="Удалить">
+                  : <Tooltip title={t('common:app.remove', 'Удалить')}>
                     <IconButton
-                      children={<Delete/>}
                       color="primary"
                       onClick={() => handleDeleteUser(userId)}
-                    />
+                    >
+                      <Delete/>
+                    </IconButton>
                   </Tooltip>}
                 {findUpdated(patch, userId)
-                  ? <Tooltip title="Восстановить все права доступа">
+                  ? <Tooltip title={t('common:app.restoreAll', 'Восстановить все права доступа')}>
                     <span>
                       <IconButton
-                        children={<SelectAll/>}
                         color="primary"
                         disabled={isDeleted(patch, userId) || (isCreated(patch, userId) && findUpdatedScopes(patch, userId).length <= 0)}
                         onClick={() => handleRestoreScopes(userId)}
-                      />
+                      >
+                        <SelectAll/>
+                      </IconButton>
                     </span>
                   </Tooltip>
-                  : <Tooltip title="Удалить все права доступа">
+                  : <Tooltip title={t('common:app.removeAll', 'Удалить все права доступа')}>
                     <span>
                       <IconButton
-                        children={<Deselect/>}
                         color="primary"
                         disabled={isDeleted(patch, userId) || findPermissionScopes(patch, userId).length <= 0}
                         onClick={() => handleDeleteScopes(userId)}
-                      />
+                      >
+                        <Deselect/>
+                      </IconButton>
                     </span>
                   </Tooltip>}
                 {isWhiteListPermission(patch, userId)
-                  ? <Tooltip title="Белый список">
+                  ? <Tooltip title={t('common:app.whitelist', 'Белый список')}>
                     <IconButton
-                      children={<ToggleOn/>}
                       color="primary"
                       onClick={() => handleChangeScopesMode(patch, userId, false)}
-                    />
+                    >
+                      <ToggleOn/>
+                    </IconButton>
                   </Tooltip>
-                  : <Tooltip title="Черный список">
+                  : <Tooltip title={t('common:app.blacklist', 'Черный список')}>
                     <IconButton
-                      children={<ToggleOff/>}
                       color="primary"
                       onClick={() => handleChangeScopesMode(patch, userId, true)}
-                    />
+                    >
+                      <ToggleOff/>
+                    </IconButton>
                   </Tooltip>
                 }
               </>
@@ -664,7 +674,7 @@ export const Access = memo(() => {
   }
 
   if (!permissions) {
-    return <Typography color="primary" variant="body2">Данные недоступны</Typography>;
+    return <Typography color="primary" variant="body2">{t('common:app.dataNotAvailable', 'Данные недоступны')}</Typography>;
   }
 
   return (

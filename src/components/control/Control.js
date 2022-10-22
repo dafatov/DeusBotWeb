@@ -2,6 +2,7 @@ import {ClearAll, Shuffle} from '@mui/icons-material';
 import {LoadingButton} from '@mui/lab';
 import {Card, CardContent, Divider, Paper, Stack, Tooltip, Typography} from '@mui/material';
 import {memo, useCallback} from 'react';
+import {useTranslation} from 'react-i18next';
 import {useAuth} from '../../security/AuthProvider';
 import {useSocket} from '../../security/SocketProvider';
 import {useSnackBar} from '../../utils/snackBar';
@@ -12,6 +13,7 @@ import {useStyles} from './controlStyles';
 
 export const Control = memo(({isLoading, setIsLoading}) => {
   const classes = useStyles();
+  const {t} = useTranslation();
   const {showSuccess, showWarning} = useSnackBar();
   const [, session] = useAuth();
   const socket = useSocket();
@@ -22,7 +24,7 @@ export const Control = memo(({isLoading, setIsLoading}) => {
       if (data.result) {
         showWarning(data.result);
       } else {
-        showSuccess('Успешно перемешана очередь');
+        showSuccess(t('web:app.control.success.shuffled', 'Успешно перемешана очередь'));
       }
     });
   }, [setIsLoading, socket, session, showWarning, showSuccess]);
@@ -33,18 +35,18 @@ export const Control = memo(({isLoading, setIsLoading}) => {
       if (data.result) {
         showWarning(data.result);
       } else {
-        showSuccess('Успешно очищена очередь');
+        showSuccess(t('web:app.control.success.cleared', 'Успешно очищена очередь'));
       }
     });
   }, [setIsLoading, socket, session, showWarning, showSuccess]);
 
-  const handleYoutubeSubmit = useCallback((audio) => {
+  const handleYoutubeSubmit = useCallback(audio => {
     setIsLoading(true);
     socket.emit('control:play', session.access_token, audio, data => {
       if (data.result) {
         showWarning(data.result);
       } else {
-        showSuccess(`Добавлено: "${data.added?.title}"`);
+        showSuccess(t('web:app.control.success.played.youtube', 'Добавлено: "{{title}}"', {title: data.added?.title}));
       }
     });
   }, [setIsLoading, socket, session, showWarning, showSuccess]);
@@ -55,18 +57,19 @@ export const Control = memo(({isLoading, setIsLoading}) => {
       if (data.result) {
         showWarning(data.result);
       } else {
-        showSuccess(`Добавлено: ${data.count} песен профиля "${data.login}"`);
+        showSuccess(
+          t('web:app.control.success.played.youtube', 'Добавлено: {{data.count}} песен профиля "{{data.login}}"', {count: data.count, login: data.login}));
       }
     });
   }, [setIsLoading, socket, session, showWarning, showSuccess]);
 
-  const handleRadiosSubmit = useCallback((radio) => {
+  const handleRadiosSubmit = useCallback(radio => {
     setIsLoading(true);
     socket.emit('control:radio', session.access_token, radio, data => {
       if (data.result) {
         showWarning(data.result);
       } else {
-        showSuccess(`Добавлено: "${data.info?.title}"`);
+        showSuccess(t('web:app.control.success.played.youtube', 'Добавлено: "{{data.info?.title}}"', {title: data.info?.title}));
       }
     });
   }, [setIsLoading, socket, session, showWarning, showSuccess]);
@@ -80,7 +83,7 @@ export const Control = memo(({isLoading, setIsLoading}) => {
           spacing={2}
         >
           <Paper elevation={2} className={classes.blockRoot}>
-            <Typography variant="h4">Воздействия</Typography>
+            <Typography variant="h4">{t('web:app.control.header.impacts', 'Воздействия')}</Typography>
             <Divider orientation="horizontal" flexItem/>
             <Stack
               direction="row"
@@ -88,7 +91,7 @@ export const Control = memo(({isLoading, setIsLoading}) => {
               spacing={1}
               className={classes.blockContainer}
             >
-              <Tooltip title="Перемешать">
+              <Tooltip title={t('common:app.shuffle', 'Перемешать')}>
                 <span>
                   <LoadingButton
                     loading={isLoading}
@@ -96,7 +99,7 @@ export const Control = memo(({isLoading, setIsLoading}) => {
                     color="primary"
                     value="shuffle"
                     size="large"
-                    aria-label="Перемешать"
+                    aria-label={t('common:app.shuffle', 'Перемешать')}
                     onClick={handleShuffleButton}
                     className={classes.loadingButton}
                   >
@@ -104,7 +107,7 @@ export const Control = memo(({isLoading, setIsLoading}) => {
                   </LoadingButton>
                 </span>
               </Tooltip>
-              <Tooltip title="Очистить">
+              <Tooltip title={t('common:app.clear', 'Очистить')}>
                 <span>
                   <LoadingButton
                     loading={isLoading}
@@ -112,7 +115,7 @@ export const Control = memo(({isLoading, setIsLoading}) => {
                     color="primary"
                     value="clear"
                     size="large"
-                    aria-label="Очистить"
+                    aria-label={t('common:app.clear', 'Очистить')}
                     onClick={handleClearButton}
                     className={classes.loadingButton}
                   >
@@ -123,7 +126,7 @@ export const Control = memo(({isLoading, setIsLoading}) => {
             </Stack>
           </Paper>
           <Paper elevation={2} className={classes.blockRoot}>
-            <Typography variant="h4">Инъекции</Typography>
+            <Typography variant="h4">{t('web:app.control.header.injections', 'Инъекции')}</Typography>
             <Divider orientation="horizontal" flexItem/>
             <Stack
               direction="row"

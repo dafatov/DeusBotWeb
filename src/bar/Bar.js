@@ -1,6 +1,7 @@
 import {Login, Logout} from '@mui/icons-material';
 import {AppBar, Avatar, Box, Button, Container, Divider, Fab, IconButton, ListItemIcon, Menu, MenuItem, Toolbar, Tooltip, Typography} from '@mui/material';
 import {memo, useCallback, useEffect, useState} from 'react';
+import {useTranslation} from 'react-i18next';
 import {useHistory} from 'react-router-dom';
 import {getProfile} from '../api/profileApi';
 import {redirect_url} from '../api/securityApi';
@@ -12,6 +13,7 @@ const auth_url = `${process.env.REACT_APP_DISCORD_API_URL}/oauth2/authorize?${au
 
 export const Bar = memo(() => {
   const classes = useStyles();
+  const {t} = useTranslation();
   const history = useHistory();
   const [logged] = useAuth();
   const [avatar, setAvatar] = useState('');
@@ -55,31 +57,31 @@ export const Bar = memo(() => {
             <Button
               key="main"
               onClick={handleMainPage}
-            >DeuS</Button>
+            >{t('web:app.bar.main', 'DeuS')}</Button>
             <Button
               key="player"
               onClick={handlePlayerPage}
-            >Плеер</Button>
+            >{t('web:app.bar.player', 'Плеер')}</Button>
             <Button
               key="administration"
               onClick={handleAdministrationPage}
-            >Администрирование</Button>
+            >{t('web:app.bar.administration', 'Администрирование')}</Button>
           </Box>
           <Box className={classes.profile}>
             {logged
               ? <IconButton
-                onClick={(e) => setAnchorEl(e.currentTarget)}
-                aria-controls={Boolean(anchorEl)
+                onClick={e => setAnchorEl(e.currentTarget)}
+                aria-controls={anchorEl
                   ? 'account-menu'
                   : undefined}
                 aria-haspopup="true"
-                aria-expanded={Boolean(anchorEl)
+                aria-expanded={anchorEl
                   ? 'true'
                   : undefined}
               >
                 <Avatar src={avatar}/>
               </IconButton>
-              : <Tooltip title={'Войти через Дискорд'}>
+              : <Tooltip title={t('web:app.bar.login', 'Войти через Дискорд')}>
                 <Fab
                   color="primary"
                   size="small"
@@ -115,7 +117,7 @@ export const Bar = memo(() => {
               <ListItemIcon>
                 <Logout/>
               </ListItemIcon>
-              <Typography>Выйти</Typography>
+              <Typography>{t('web:app.bar.logout', 'Выйти')}</Typography>
             </MenuItem>
           </Menu>
         </Toolbar>
