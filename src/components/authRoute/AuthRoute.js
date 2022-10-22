@@ -10,7 +10,8 @@ export const AuthRoute = memo(({session, scope, ...props}) => {
     return <CircularProgress/>;
   }
 
-  return (session
+  return (
+    session
       ? isForbidden
         ? <Redirect to={{pathname: '/forbidden'}}/>
         : <Route {...props}/>
