@@ -26,7 +26,7 @@ export const Queue = memo(({songs, isLoading, setIsLoading}) => {
       if (data.result) {
         showWarning(data.result);
       } else {
-        showSuccess(t('web:app.nowPlaying.success.skipped', 'Успешно удалена композиция: "{{title}}"'), {title: data.isRemoved.title});
+        showSuccess(t('web:app.nowPlaying.success.removed', 'Успешно удалена композиция: "{{title}}"'), {title: data.isRemoved.title});
       }
     });
   }, [setIsLoading, socket, session, showSuccess, showWarning]);
@@ -37,7 +37,7 @@ export const Queue = memo(({songs, isLoading, setIsLoading}) => {
       if (data.result) {
         showWarning(data.result);
       } else {
-        showSuccess(t('web:app.nowPlaying.success.skipped', 'Успешно перемещена на "{{target}}" позицию композиция: "{{title}}"',
+        showSuccess(t('web:app.nowPlaying.success.moved', 'Успешно перемещена на "{{target}}" позицию композиция: "{{title}}"',
           {target: data.newIndex + 1, title: data.isMoved.title},
         ));
       }

@@ -26,3 +26,6 @@ yarn-error.log*
 /.idea
 /*.iml
 /*.env
+
+# dev
+/i18Scanner

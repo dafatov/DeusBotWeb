@@ -45,7 +45,7 @@ export const NowPlaying = memo(({nowPlaying, isLoading, setIsLoading}) => {
       if (data.result) {
         showWarning(data.result);
       } else {
-        showSuccess(t('web:app.nowPlaying.success.skipped', 'Успешно {{action}} композиция'), {
+        showSuccess(t('web:app.nowPlaying.success.paused', 'Успешно {{action}} композиция'), {
           action: data.isPause
             ? t('common:app.paused', 'приостановлена')
             : t('common:app.resumed', 'возобновлена'),

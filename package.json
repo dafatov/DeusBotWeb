@@ -7,7 +7,8 @@
     "build": "REACT_APP_VERSION=$npm_package_version react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint ./src"
+    "lint": "eslint ./src",
+    "i18Scanner": "i18next-scanner --config ./src/configs/i18nextScanner.js"
   },
   "author": "DemetriouS",
   "license": "MIT",
@@ -52,7 +53,8 @@
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-no-loops": "^0.3.0",
     "eslint-plugin-react": "^7.31.10",
-    "eslint-plugin-sort-imports-requires": "^1.0.2"
+    "eslint-plugin-sort-imports-requires": "^1.0.2",
+    "i18next-scanner": "^4.1.0"
   },
   "eslintConfig": {
     "extends": [

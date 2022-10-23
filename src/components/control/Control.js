@@ -58,7 +58,7 @@ export const Control = memo(({isLoading, setIsLoading}) => {
         showWarning(data.result);
       } else {
         showSuccess(
-          t('web:app.control.success.played.youtube', 'Добавлено: {{data.count}} песен профиля "{{data.login}}"', {count: data.count, login: data.login}));
+          t('web:app.control.success.played.skikimori', 'Добавлено: {{data.count}} песен профиля "{{data.login}}"', {count: data.count, login: data.login}));
       }
     });
   }, [setIsLoading, socket, session, showWarning, showSuccess]);
@@ -69,7 +69,7 @@ export const Control = memo(({isLoading, setIsLoading}) => {
       if (data.result) {
         showWarning(data.result);
       } else {
-        showSuccess(t('web:app.control.success.played.youtube', 'Добавлено: "{{data.info?.title}}"', {title: data.info?.title}));
+        showSuccess(t('web:app.control.success.played.radios', 'Добавлено: "{{data.info?.title}}"', {title: data.info?.title}));
       }
     });
   }, [setIsLoading, socket, session, showWarning, showSuccess]);
