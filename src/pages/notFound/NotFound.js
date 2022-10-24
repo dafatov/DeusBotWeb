@@ -20,7 +20,7 @@ export const NotFound = memo(() => {
           spacing={2}
         >
           <Typography align="center" variant="h1">{t('web:app.notFound.title', 'Ошибка 404')}</Typography>
-          <Typography>{t('web:app.notFound.description', 'Страницы с адресом {{location.pathname}} не существует', {path: location.pathname})}</Typography>
+          <Typography>{t('web:app.notFound.description', 'Страницы с адресом {{path}} не существует', {path: location.pathname})}</Typography>
           <Button onClick={handleToMain}>{t('common:app.toMain', 'На главную')}</Button>
         </Stack>
       </CardContent>

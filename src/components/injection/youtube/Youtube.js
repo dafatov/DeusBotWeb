@@ -30,8 +30,10 @@ export const Youtube = memo(({onSubmit, isLoading}) => {
       <DialogTitle>{t('web:app.injection.youtube.title', 'Добавление композиций с youtube`а')}</DialogTitle>
       <DialogContent>
         <DialogContentText>
-          {t('web:app.injection.youtube.description', 'В форму ниже можно вставить ссылку на композицию или плейлист или поисковой запрос. '
-            + 'Приватные или удаленные плейлисты и песни не могут быть воспроизведены')}
+          {t(
+            'web:app.injection.youtube.description',
+            'В форму ниже можно вставить ссылку на композицию или плейлист или поисковой запрос. Приватные или удаленные плейлисты и песни не могут быть воспроизведены',
+          )}
         </DialogContentText>
         <Paper
           component="form"

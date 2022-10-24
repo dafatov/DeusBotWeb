@@ -61,8 +61,10 @@ export const SelectUsers = memo(({
         {scopes?.length > 0
           ? <>
             <Typography color="primary" variant="body2">
-              {t('web:app.audit.selectUsers.description', 'Скопированы права доступа. Обратите внимание, что режим белового или черного списка НЕ копируется.'
-                + 'Все добавленные пользователи будут добавляться с ними:')}
+              {t(
+                'web:app.audit.selectUsers.description',
+                'Скопированы права доступа. Обратите внимание, что режим белового или черного списка НЕ копируется. Все добавленные пользователи будут добавляться с ними:',
+              )}
             </Typography>
             <Divider/>
             {scopes.map(scope => (
