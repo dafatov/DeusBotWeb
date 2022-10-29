@@ -35,10 +35,6 @@ module.exports = {
         'offsetTernaryExpressions': false,
       },
     ],
-    'linebreak-style': [
-      'error',
-      'windows',
-    ],
     'max-params': ['error', MAX_ARGUMENTS],
     'no-console': 'error',
     'no-duplicate-imports': 'error',
